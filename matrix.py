@@ -80,27 +80,6 @@ def make_rotZ( theta ):
     t[1][1] = math.cos(theta)
     return t
 
-def make_shearX(shX, shY, shZ):
-    t = new_matrix()
-    ident(t)
-    t[1][0] = shX
-    t[2][0] = shY
-    return t
-
-def make_shearY(shX, shY, shZ):
-    t = new_matrix()
-    ident(t)
-    t[0][1] = shX
-    t[2][1] = shZ
-    return t
-
-def make_shearZ(shX, shY, shZ):
-    t = new_matrix()
-    ident(t)
-    t[0][2] = shX
-    t[1][2] = shY
-    return t
-
 #print the matrix such that it looks like
 #the template in the top comment
 def print_matrix( matrix ):
@@ -109,8 +88,8 @@ def print_matrix( matrix ):
         for c in range( len(matrix) ):
             s+= str(matrix[c][r]) + ' '
         s+= '\n'
-    print(s)
-
+    print s
+    
 #turn the paramter matrix into an identity matrix
 #you may assume matrix is square
 def ident( matrix ):

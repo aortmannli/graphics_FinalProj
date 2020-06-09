@@ -1,4 +1,4 @@
-from ply import lex, yacc
+import lex, yacc
 
 tokens = (
     "STRING",
@@ -14,47 +14,45 @@ tokens = (
     "AMBIENT",
     "TORUS",
     "SPHERE",
-    "STAR",
-    "BOX",
-    "LINE",
-    "MESH",
-    "TEXTURE",
-    "SET",
-    "MOVE",
-    "SCALE",
-    "ROTATE",
-    "BASENAME",
-    "SAVE_KNOBS",
-    "TWEEN",
-    "FRAMES",
-    "VARY",
-    "PUSH",
-    "POP",
-    "SAVE",
-    "GENERATE_RAYFILES",
-    "SHADING",
-    "SHADING_TYPE",
-    "SET_KNOBS",
-    "FOCAL",
-    "DISPLAY",
-    "SCREEN",
-    "WEB",
+    "BOX", 
+    "LINE", 
+    "MESH", 
+    "TEXTURE", 
+    "SET", 
+    "MOVE", 
+    "SCALE", 
+    "ROTATE", 
+    "BASENAME", 
+    "SAVE_KNOBS", 
+    "TWEEN", 
+    "FRAMES", 
+    "VARY", 
+    "PUSH", 
+    "POP", 
+    "SAVE", 
+    "GENERATE_RAYFILES", 
+    "SHADING", 
+    "SHADING_TYPE", 
+    "SET_KNOBS", 
+    "FOCAL", 
+    "DISPLAY", 
+    "SCREEN", 
+    "WEB", 
     "CO"
 )
 
 reserved = {
-    "x" : "XYZ",
-    "y" : "XYZ",
-    "z" : "XYZ",
-    "screen" : "SCREEN",
+    "x" : "XYZ", 
+    "y" : "XYZ", 
+    "z" : "XYZ", 
+    "screen" : "SCREEN", 
     "light" : "LIGHT",
     "constants" : "CONSTANTS",
-    "save_coord_system" : "SAVE_COORDS",
+    "save_coord_system" : "SAVE_COORDS", 
     "camera" : "CAMERA",
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
     "sphere" : "SPHERE",
-    "star" : "STAR",
     "box" : "BOX",
     "line" : "LINE",
     "mesh" : "MESH",
@@ -88,7 +86,7 @@ t_ignore = " \t"
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    if t.value in reserved:
+    if reserved.has_key(t.value):
         t.type = reserved.get(t.value)
     return t
 
@@ -111,7 +109,7 @@ def t_CO(t):
     return t
 
 def t_error(t):
-    print("TOKEN ERROR: " + str(t))
+    print "TOKEN ERROR: " + str(t)
 
 lex.lex()
 
@@ -180,24 +178,6 @@ def p_command_sphere(p):
           cmd['cs'] = p[7]
     cmd['args'] = p[arg_start:arg_start+4]
     commands.append(cmd)
-
-def p_command_star(p):
-    """command : STAR NUMBER NUMBER NUMBER NUMBER NUMBER
-               | STAR NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
-               | STAR SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER
-               | STAR SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL"""
-    cmd = {'op' : p[1], 'constants' : None, 'cs' : None, 'args':[]}
-    arg_start = 2
-    if isinstance(p[2], str):
-        cmd['constants'] = p[2]
-        arg_start = 3
-    if len(p) == 8 and isinstance(p[7], str):
-        cmd['cs'] = p[7]
-    if len(p) == 9 and isinstance(p[8], str):
-          cmd['cs'] = p[8]
-    cmd['args'] = p[arg_start:arg_start+5]
-    commands.append(cmd)
-
 
 def p_command_torus(p):
     """command : TORUS NUMBER NUMBER NUMBER NUMBER NUMBER
@@ -398,7 +378,7 @@ def p_texture(p):
     symbols[p[2]] = ['texture', p[3:]]
 
 def p_error(p):
-    print('SYNTAX ERROR: ' + str(p))
+    print 'SYNTAX ERROR: ' + str(p)
 
 yacc.yacc()
 

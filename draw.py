@@ -29,6 +29,7 @@ def scanline_convert(polygons, i, screen, zbuffer, color):
     points = [ (polygons[i][0], polygons[i][1], polygons[i][2]),
                (polygons[i+1][0], polygons[i+1][1], polygons[i+1][2]),
                (polygons[i+2][0], polygons[i+2][1], polygons[i+2][2]) ]
+
     # alas random color, we hardly knew ye
     #color = [0,0,0]
     #color[RED] = (23*(i/3)) %256
@@ -76,9 +77,8 @@ def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x2, y2, z2)
 
 def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, reflect):
-    print("drawing")
     if len(polygons) < 2:
-        print('Need at least 3 points to draw')
+        print 'Need at least 3 points to draw'
         return
 
     point = 0
@@ -86,10 +86,9 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
 
         normal = calculate_normal(polygons, point)[:]
 
-        print(normal)
         #print normal
         if normal[2] > 0:
-            print("Nomr")
+
             color = get_lighting(normal, view, ambient, light, symbols, reflect )
             scanline_convert(polygons, point, screen, zbuffer, color)
 
@@ -143,50 +142,6 @@ def add_box( polygons, x, y, z, width, height, depth ):
     #bottom
     add_polygon(polygons, x, y1, z, x1, y1, z1, x1, y1, z)
     add_polygon(polygons, x, y1, z, x, y1, z1, x1, y1, z1)
-
-def add_star(polygons, cx, cy, cz, ro, ri):
-    print("HERE making star")
-    s1 = (.25 * math.sqrt(10 + 2 * math.sqrt(5)))
-    s2 = (.25 * math.sqrt(10 - 2 * math.sqrt(5)))
-    c1 = (.25 * (math.sqrt(5) - 1))
-    c2 = (.25 * (math.sqrt(5) + 1))
-
-    ip1 = [cx, cy + ri]
-    ip2 = [cx + s1 * ri, cy + c1 * ri]
-    ip3 = [cx + s2 * ri, cy + -1 * c2 * ri]
-    ip4 = [cx + -1 * s2 * ri, cy + -1 * c2 * ri]
-    ip5 = [cx + -1 * s1 * ri, cy + c1 * ri]
-
-    op1 = [cx + s2 * ro, cy + c2 * ro]
-    op2 = [cx + s1 * ro, cy - c1 * ro]
-    op3 = [cx, cy - ro]
-    op4 = [cx + -1 * s1 * ro, cy - c1 * ro]
-    op5 = [cx + -1 * s2 * ro, cy + c2 * ro]
-
-    add_polygon(polygons, cx, cy, cz, op1[0], op1[1], cz, ip1[0], ip1[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip2[0], ip2[1], cz, op1[0], op1[1], cz)
-
-    add_polygon(polygons, cx, cy, cz, op2[0], op2[1], cz, ip2[0], ip2[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip3[0], ip3[1], cz, op2[0], op2[1], cz)
-
-    add_polygon(polygons, cx, cy, cz, op3[0], op3[1], cz, ip3[0], ip3[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip4[0], ip4[1], cz, op3[0], op3[1], cz)
-
-    add_polygon(polygons, cx, cy, cz, op3[0], op3[1], cz, ip3[0], ip3[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip4[0], ip4[1], cz, op3[0], op3[1], cz)
-
-    add_polygon(polygons, cx, cy, cz, op4[0], op4[1], cz, ip4[0], ip4[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip5[0], ip5[1], cz, op4[0], op4[1], cz)
-
-    add_polygon(polygons, cx, cy, cz, op5[0], op5[1], cz, ip5[0], ip5[1], cz)
-    add_polygon(polygons, cx, cy, cz, ip1[0], ip1[1], cz, op5[0], op5[1], cz)
-
-    #add_polygon(polygons, cx, cy, cz, hp2[0], hp2[1], cz,  hp1[0], hp1[1], cz)
-    #add_polygon(polygons, cx, cy, cz, hp3[0], hp3[1], cz,  hp2[0], hp2[1], cz)
-    #add_polygon(polygons, cx, cy, cz, hp4[0], hp4[1], cz,  hp3[0], hp3[1], cz)
-    #add_polygon(polygons, cx, cy, cz, hp5[0], hp5[1], cz,  hp4[0], hp4[1], cz)
-    #add_polygon(polygons, cx, cy, cz, hp1[0], hp1[1], cz,  hp5[0], hp5[1], cz)*/
-
 
 def add_sphere(polygons, cx, cy, cz, r, step ):
     points = generate_sphere(cx, cy, cz, r, step)
@@ -345,7 +300,7 @@ def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
 
 def draw_lines( matrix, screen, zbuffer, color ):
     if len(matrix) < 2:
-        print('Need at least 2 points to draw')
+        print 'Need at least 2 points to draw'
         return
 
     point = 0

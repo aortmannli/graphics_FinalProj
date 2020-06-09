@@ -1,5 +1,5 @@
 from subprocess import Popen, PIPE
-from os import remove, fork, execlp
+import os
 
 #constants
 XRES = 500
@@ -58,39 +58,25 @@ def save_ppm( screen, fname ):
         ppm+= row + '\n'
     f.write( ppm )
     f.close()
-# def save_ppm( screen, fname ):
-#     f = open( fname, 'w' )
-#     ppm = 'P3\n' + str(len(screen[0])) +' '+ str(len(screen)) +' '+ str(MAX_COLOR) +'\n'
-#     rows = []
-#     for y in range( len(screen) ):
-#         row = []
-#         for x in range( len(screen[y]) ):
-#             pixel = screen[y][x]
-#             row.append(' '.join([str(x) for x in pixel]))
-#         rows.append(' '.join(row))
-#     ppm+= '\n'.join(rows)
-#     print ppm
-#     f.write( ppm )
-#     f.close()
 
 def save_extension( screen, fname ):
     ppm_name = fname[:fname.find('.')] + '.ppm'
     save_ppm( screen, ppm_name )
-    p = Popen( ['convert', ppm_name, fname ], stdin=PIPE, stdout = PIPE )
+    p = Popen( ['convert', ppm_name, fname + '.png' ], stdin=PIPE, stdout = PIPE )
     p.communicate()
-    remove(ppm_name)
+    os.remove(ppm_name)
 
 def display( screen ):
     ppm_name = 'pic.ppm'
     save_ppm( screen, ppm_name )
     p = Popen( ['display', ppm_name], stdin=PIPE, stdout = PIPE )
     p.communicate()
-    remove(ppm_name)
+    os.remove(ppm_name)
 
 def make_animation( name ):
     name_arg = 'anim/' + name + '*'
     name = name + '.gif'
-    print('Saving animation as ' + name)
-    f = fork()
+    print 'Saving animation as ' + name
+    f = os.fork()
     if f == 0:
-        execlp('convert', 'convert', '-delay', '1.7', name_arg, name)
+        os.execlp('convert', 'convert', '-delay', '1.7', name_arg, name)
