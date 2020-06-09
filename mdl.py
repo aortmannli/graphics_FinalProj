@@ -14,41 +14,42 @@ tokens = (
     "AMBIENT",
     "TORUS",
     "SPHERE",
-    "BOX", 
-    "LINE", 
-    "MESH", 
-    "TEXTURE", 
-    "SET", 
-    "MOVE", 
-    "SCALE", 
-    "ROTATE", 
-    "BASENAME", 
-    "SAVE_KNOBS", 
-    "TWEEN", 
-    "FRAMES", 
-    "VARY", 
-    "PUSH", 
-    "POP", 
-    "SAVE", 
-    "GENERATE_RAYFILES", 
-    "SHADING", 
-    "SHADING_TYPE", 
-    "SET_KNOBS", 
-    "FOCAL", 
-    "DISPLAY", 
-    "SCREEN", 
-    "WEB", 
+    "BOX",
+    "LINE",
+    "MESH",
+    "TEXTURE",
+    "SET",
+    "MOVE",
+    "SCALE",
+    "ROTATE",
+    "SHEAR",
+    "BASENAME",
+    "SAVE_KNOBS",
+    "TWEEN",
+    "FRAMES",
+    "VARY",
+    "PUSH",
+    "POP",
+    "SAVE",
+    "GENERATE_RAYFILES",
+    "SHADING",
+    "SHADING_TYPE",
+    "SET_KNOBS",
+    "FOCAL",
+    "DISPLAY",
+    "SCREEN",
+    "WEB",
     "CO"
 )
 
 reserved = {
-    "x" : "XYZ", 
-    "y" : "XYZ", 
-    "z" : "XYZ", 
-    "screen" : "SCREEN", 
+    "x" : "XYZ",
+    "y" : "XYZ",
+    "z" : "XYZ",
+    "screen" : "SCREEN",
     "light" : "LIGHT",
     "constants" : "CONSTANTS",
-    "save_coord_system" : "SAVE_COORDS", 
+    "save_coord_system" : "SAVE_COORDS",
     "camera" : "CAMERA",
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
@@ -268,6 +269,14 @@ def p_command_rotate(p):
         symbols[p[4]] = ['knob', 0]
     commands.append(cmd)
 
+def p_command_shear(p):
+    """command SHEAR XYZ NUMBER"""
+    cmd = {'op' : p[1], 'args' : p[2:4], 'knob' : None}
+    if len(p) == 5:
+        cmd['knob'] = p[4]
+        symbols[p[4]] = ['knob', 0]
+    commands.append(cmd)
+
 def p_command_frames(p):
     """command : FRAMES NUMBER"""
     cmd = {'op' : p[1], 'args' : [p[2]]}
@@ -279,7 +288,8 @@ def p_command_basename(p):
     commands.append(cmd)
 
 def p_command_vary(p):
-    """command : VARY SYMBOL NUMBER NUMBER NUMBER NUMBER"""
+    """command : VARY SYMBOL NUMBER NUMBER NUMBER NUMBER
+               | VARY SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER"""
     cmd = {'op' : p[1], 'args' : p[3:], 'knob' : p[2]}
     symbols[p[2]] = ['knob', 0]
     commands.append(cmd)
