@@ -22,16 +22,22 @@ SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, symbols, reflect ):
+    #light_sources is a list of all the lighting sources in symbols
+    light_sources = []
+    for symbol in symbols:
+        if symbols[symbol][0] == 'light':
+            light_sources.append(symbols[symbol][1])
 
     n = normal[:]
     normalize(n)
-    normalize(light[LOCATION])
+    for l in light_sources:
+	normalize(l['location'])
     normalize(view)
     r = symbols[reflect][1]
 
     a = calculate_ambient(ambient, r)
-    d = calculate_diffuse(light, r, n)
-    s = calculate_specular(light, r, view, n)
+    d = calculate_diffuse(light_sources, r, n)
+    s = calculate_specular(light_sources, r, view, n)
 
     i = [0, 0, 0]
     i[RED] = int(a[RED] + d[RED] + s[RED])
@@ -48,39 +54,43 @@ def calculate_ambient(alight, reflect):
     a[BLUE] = alight[BLUE] * reflect['blue'][AMBIENT]
     return a
 
-def calculate_diffuse(light, reflect, normal):
+def calculate_diffuse(light_sources, reflect, normal):
     d = [0, 0, 0]
+    dot = 0
+    for light in light_sources:
+        dot += dot_product( light['location'], normal)
 
-    dot = dot_product( light[LOCATION], normal)
-
-    dot = dot if dot > 0 else 0
-    d[RED] = light[COLOR][RED] * reflect['red'][DIFFUSE] * dot
-    d[GREEN] = light[COLOR][GREEN] * reflect['green'][DIFFUSE] * dot
-    d[BLUE] = light[COLOR][BLUE] * reflect['blue'][DIFFUSE] * dot
+        dot += dot if dot > 0 else 0
+        d[RED] += light['color'][RED] * reflect['red'][DIFFUSE] * dot
+        d[GREEN] += light['color'][GREEN] * reflect['green'][DIFFUSE] * dot
+        d[BLUE] += light['color'][BLUE] * reflect['blue'][DIFFUSE] * dot
     return d
 
-def calculate_specular(light, reflect, view, normal):
+def calculate_specular(light_sources, reflect, view, normal):
     s = [0, 0, 0]
     n = [0, 0, 0]
+    for light in light_sources:
+        result = 2 * dot_product(light['location'], normal)
+        n[0] = (normal[0] * result) - light['location'][0]
+        n[1] = (normal[1] * result) - light['location'][1]
+        n[2] = (normal[2] * result) - light['location'][2]
 
-    result = 2 * dot_product(light[LOCATION], normal)
-    n[0] = (normal[0] * result) - light[LOCATION][0]
-    n[1] = (normal[1] * result) - light[LOCATION][1]
-    n[2] = (normal[2] * result) - light[LOCATION][2]
+        result = dot_product(n, view)
+        result = result if result > 0 else 0
+        result = pow( result, SPECULAR_EXP )
 
-    result = dot_product(n, view)
-    result = result if result > 0 else 0
-    result = pow( result, SPECULAR_EXP )
-
-    s[RED] = light[COLOR][RED] * reflect['red'][SPECULAR] * result
-    s[GREEN] = light[COLOR][GREEN] * reflect['green'][SPECULAR] * result
-    s[BLUE] = light[COLOR][BLUE] * reflect['blue'][SPECULAR] * result
+        s[RED] += light['color'][RED] * reflect['red'][SPECULAR] * result
+        s[GREEN] += light['color'][GREEN] * reflect['green'][SPECULAR] * result
+        s[BLUE] += light['color'][BLUE] * reflect['blue'][SPECULAR] * result
     return s
 
 def limit_color(color):
     color[RED] = 255 if color[RED] > 255 else color[RED]
     color[GREEN] = 255 if color[GREEN] > 255 else color[GREEN]
     color[BLUE] = 255 if color[BLUE] > 255 else color[BLUE]
+    color[RED] = 0 if color[RED] < 0 else color[RED]
+    color[GREEN] = 0 if color[GREEN] < 0 else color[GREEN]
+    color[BLUE] = 0 if color[BLUE] < 0 else color[BLUE]
 
 #vector functions
 #normalize vetor, should modify the parameter
