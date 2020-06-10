@@ -403,7 +403,7 @@ yacc.yacc()
 
 from copy import deepcopy
 
-def parseFile(filename):``
+def parseFile(filename):
     """
     This function returns a tuple containing a list of opcodes
     and a list of symbols.
