@@ -1,0 +1,8 @@
+basename boks
+push
+box 0 100 100 100 100 100
+display
+shear y 100 50
+display
+rotate x 45
+display

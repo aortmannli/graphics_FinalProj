@@ -2,7 +2,6 @@ Created by PLY version 3.4 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    SHEARING
     INT
 
 Grammar
@@ -48,8 +47,8 @@ Rule 37    command -> SCALE NUMBER NUMBER NUMBER SYMBOL
 Rule 38    command -> SCALE NUMBER NUMBER NUMBER
 Rule 39    command -> ROTATE XYZ NUMBER SYMBOL
 Rule 40    command -> ROTATE XYZ NUMBER
-Rule 41    command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL
-Rule 42    command -> ROTATE XYZ NUMBER NUMBER NUMBER
+Rule 41    command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL
+Rule 42    command -> SHEAR XYZ NUMBER NUMBER NUMBER
 Rule 43    command -> FRAMES NUMBER
 Rule 44    command -> BASENAME TEXT
 Rule 45    command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER
@@ -95,7 +94,7 @@ MESH                 : 55 56 57 58
 MOVE                 : 35 36
 POP                  : 9
 PUSH                 : 10
-ROTATE               : 39 40 41 42
+ROTATE               : 39 40
 SAVE                 : 13
 SAVE_COORDS          : 60
 SAVE_KNOBS           : 59
@@ -105,7 +104,7 @@ SET                  : 46
 SET_KNOBS            : 47
 SHADING              : 52
 SHADING_TYPE         : 52
-SHEARING             : 
+SHEAR                : 41 42
 SPHERE               : 15 16 17 18
 STRING               : 7
 TEXTURE              : 64
@@ -164,8 +163,8 @@ state 0
     (38) command -> . SCALE NUMBER NUMBER NUMBER
     (39) command -> . ROTATE XYZ NUMBER SYMBOL
     (40) command -> . ROTATE XYZ NUMBER
-    (41) command -> . ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL
-    (42) command -> . ROTATE XYZ NUMBER NUMBER NUMBER
+    (41) command -> . SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL
+    (42) command -> . SHEAR XYZ NUMBER NUMBER NUMBER
     (43) command -> . FRAMES NUMBER
     (44) command -> . BASENAME TEXT
     (45) command -> . VARY SYMBOL NUMBER NUMBER NUMBER NUMBER
@@ -194,7 +193,7 @@ state 0
     POP             shift and go to state 14
     PUSH            shift and go to state 17
     SCREEN          shift and go to state 22
-    SAVE            shift and go to state 32
+    SAVE            shift and go to state 33
     DISPLAY         shift and go to state 10
     SPHERE          shift and go to state 25
     TORUS           shift and go to state 19
@@ -202,14 +201,15 @@ state 0
     LINE            shift and go to state 9
     MOVE            shift and go to state 4
     SCALE           shift and go to state 3
-    ROTATE          shift and go to state 28
+    ROTATE          shift and go to state 29
+    SHEAR           shift and go to state 28
     FRAMES          shift and go to state 8
     BASENAME        shift and go to state 11
     VARY            shift and go to state 5
     SET             shift and go to state 13
-    SET_KNOBS       shift and go to state 29
-    AMBIENT         shift and go to state 31
-    CONSTANTS       shift and go to state 33
+    SET_KNOBS       shift and go to state 30
+    AMBIENT         shift and go to state 32
+    CONSTANTS       shift and go to state 34
     LIGHT           shift and go to state 16
     SHADING         shift and go to state 27
     CAMERA          shift and go to state 15
@@ -223,7 +223,7 @@ state 0
     TEXTURE         shift and go to state 6
 
     input                          shift and go to state 18
-    command                        shift and go to state 30
+    command                        shift and go to state 31
 
 state 1
 
@@ -235,12 +235,12 @@ state 1
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 35
-    NUMBER                         shift and go to state 36
+    SYMBOL                         shift and go to state 36
+    NUMBER                         shift and go to state 37
 
 state 2
 
@@ -259,6 +259,7 @@ state 2
     MOVE            reduce using rule 54 (command -> GENERATE_RAYFILES .)
     SCALE           reduce using rule 54 (command -> GENERATE_RAYFILES .)
     ROTATE          reduce using rule 54 (command -> GENERATE_RAYFILES .)
+    SHEAR           reduce using rule 54 (command -> GENERATE_RAYFILES .)
     FRAMES          reduce using rule 54 (command -> GENERATE_RAYFILES .)
     BASENAME        reduce using rule 54 (command -> GENERATE_RAYFILES .)
     VARY            reduce using rule 54 (command -> GENERATE_RAYFILES .)
@@ -286,9 +287,9 @@ state 3
     (38) command -> SCALE . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 39
+    NUMBER                         shift and go to state 40
 
 state 4
 
@@ -296,9 +297,9 @@ state 4
     (36) command -> MOVE . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 40
+    NUMBER                         shift and go to state 41
 
 state 5
 
@@ -306,10 +307,10 @@ state 5
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 41
+    SYMBOL                         shift and go to state 42
 
 state 6
 
@@ -317,10 +318,10 @@ state 6
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 42
+    SYMBOL                         shift and go to state 43
 
 state 7
 
@@ -328,19 +329,19 @@ state 7
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 43
+    SYMBOL                         shift and go to state 44
 
 state 8
 
     (43) command -> FRAMES . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 44
+    NUMBER                         shift and go to state 45
 
 state 9
 
@@ -356,12 +357,12 @@ state 9
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 46
-    NUMBER                         shift and go to state 45
+    SYMBOL                         shift and go to state 47
+    NUMBER                         shift and go to state 46
 
 state 10
 
@@ -380,6 +381,7 @@ state 10
     MOVE            reduce using rule 14 (command -> DISPLAY .)
     SCALE           reduce using rule 14 (command -> DISPLAY .)
     ROTATE          reduce using rule 14 (command -> DISPLAY .)
+    SHEAR           reduce using rule 14 (command -> DISPLAY .)
     FRAMES          reduce using rule 14 (command -> DISPLAY .)
     BASENAME        reduce using rule 14 (command -> DISPLAY .)
     VARY            reduce using rule 14 (command -> DISPLAY .)
@@ -409,12 +411,12 @@ state 11
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    STRING          shift and go to state 47
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    STRING          shift and go to state 48
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    TEXT                           shift and go to state 48
-    SYMBOL                         shift and go to state 49
+    TEXT                           shift and go to state 49
+    SYMBOL                         shift and go to state 50
 
 state 12
 
@@ -433,6 +435,7 @@ state 12
     MOVE            reduce using rule 3 (command -> COMMENT .)
     SCALE           reduce using rule 3 (command -> COMMENT .)
     ROTATE          reduce using rule 3 (command -> COMMENT .)
+    SHEAR           reduce using rule 3 (command -> COMMENT .)
     FRAMES          reduce using rule 3 (command -> COMMENT .)
     BASENAME        reduce using rule 3 (command -> COMMENT .)
     VARY            reduce using rule 3 (command -> COMMENT .)
@@ -460,10 +463,10 @@ state 13
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 50
+    SYMBOL                         shift and go to state 51
 
 state 14
 
@@ -482,6 +485,7 @@ state 14
     MOVE            reduce using rule 9 (command -> POP .)
     SCALE           reduce using rule 9 (command -> POP .)
     ROTATE          reduce using rule 9 (command -> POP .)
+    SHEAR           reduce using rule 9 (command -> POP .)
     FRAMES          reduce using rule 9 (command -> POP .)
     BASENAME        reduce using rule 9 (command -> POP .)
     VARY            reduce using rule 9 (command -> POP .)
@@ -508,9 +512,9 @@ state 15
     (53) command -> CAMERA . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 51
+    NUMBER                         shift and go to state 52
 
 state 16
 
@@ -518,10 +522,10 @@ state 16
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 52
+    SYMBOL                         shift and go to state 53
 
 state 17
 
@@ -540,6 +544,7 @@ state 17
     MOVE            reduce using rule 10 (command -> PUSH .)
     SCALE           reduce using rule 10 (command -> PUSH .)
     ROTATE          reduce using rule 10 (command -> PUSH .)
+    SHEAR           reduce using rule 10 (command -> PUSH .)
     FRAMES          reduce using rule 10 (command -> PUSH .)
     BASENAME        reduce using rule 10 (command -> PUSH .)
     VARY            reduce using rule 10 (command -> PUSH .)
@@ -577,21 +582,21 @@ state 19
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 54
-    NUMBER                         shift and go to state 53
+    SYMBOL                         shift and go to state 55
+    NUMBER                         shift and go to state 54
 
 state 20
 
     (62) command -> FOCAL . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 55
+    NUMBER                         shift and go to state 56
 
 state 21
 
@@ -610,6 +615,7 @@ state 21
     MOVE            reduce using rule 63 (command -> WEB .)
     SCALE           reduce using rule 63 (command -> WEB .)
     ROTATE          reduce using rule 63 (command -> WEB .)
+    SHEAR           reduce using rule 63 (command -> WEB .)
     FRAMES          reduce using rule 63 (command -> WEB .)
     BASENAME        reduce using rule 63 (command -> WEB .)
     VARY            reduce using rule 63 (command -> WEB .)
@@ -650,6 +656,7 @@ state 22
     MOVE            reduce using rule 12 (command -> SCREEN .)
     SCALE           reduce using rule 12 (command -> SCREEN .)
     ROTATE          reduce using rule 12 (command -> SCREEN .)
+    SHEAR           reduce using rule 12 (command -> SCREEN .)
     FRAMES          reduce using rule 12 (command -> SCREEN .)
     BASENAME        reduce using rule 12 (command -> SCREEN .)
     VARY            reduce using rule 12 (command -> SCREEN .)
@@ -669,9 +676,9 @@ state 22
     WEB             reduce using rule 12 (command -> SCREEN .)
     TEXTURE         reduce using rule 12 (command -> SCREEN .)
     $end            reduce using rule 12 (command -> SCREEN .)
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 56
+    NUMBER                         shift and go to state 57
 
 state 23
 
@@ -679,19 +686,19 @@ state 23
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 57
+    SYMBOL                         shift and go to state 58
 
 state 24
 
     (61) command -> TWEEN . NUMBER NUMBER SYMBOL SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 58
+    NUMBER                         shift and go to state 59
 
 state 25
 
@@ -703,12 +710,12 @@ state 25
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 59
-    NUMBER                         shift and go to state 60
+    SYMBOL                         shift and go to state 60
+    NUMBER                         shift and go to state 61
 
 state 26
 
@@ -719,39 +726,45 @@ state 26
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    CO              shift and go to state 61
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    CO              shift and go to state 62
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 62
+    SYMBOL                         shift and go to state 63
 
 state 27
 
     (52) command -> SHADING . SHADING_TYPE
 
-    SHADING_TYPE    shift and go to state 63
+    SHADING_TYPE    shift and go to state 64
 
 
 state 28
 
-    (39) command -> ROTATE . XYZ NUMBER SYMBOL
-    (40) command -> ROTATE . XYZ NUMBER
-    (41) command -> ROTATE . XYZ NUMBER NUMBER NUMBER SYMBOL
-    (42) command -> ROTATE . XYZ NUMBER NUMBER NUMBER
+    (41) command -> SHEAR . XYZ NUMBER NUMBER NUMBER SYMBOL
+    (42) command -> SHEAR . XYZ NUMBER NUMBER NUMBER
 
-    XYZ             shift and go to state 64
+    XYZ             shift and go to state 65
 
 
 state 29
 
+    (39) command -> ROTATE . XYZ NUMBER SYMBOL
+    (40) command -> ROTATE . XYZ NUMBER
+
+    XYZ             shift and go to state 66
+
+
+state 30
+
     (47) command -> SET_KNOBS . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 65
+    NUMBER                         shift and go to state 67
 
-state 30
+state 31
 
     (2) input -> command . input
     (1) input -> .
@@ -789,8 +802,8 @@ state 30
     (38) command -> . SCALE NUMBER NUMBER NUMBER
     (39) command -> . ROTATE XYZ NUMBER SYMBOL
     (40) command -> . ROTATE XYZ NUMBER
-    (41) command -> . ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL
-    (42) command -> . ROTATE XYZ NUMBER NUMBER NUMBER
+    (41) command -> . SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL
+    (42) command -> . SHEAR XYZ NUMBER NUMBER NUMBER
     (43) command -> . FRAMES NUMBER
     (44) command -> . BASENAME TEXT
     (45) command -> . VARY SYMBOL NUMBER NUMBER NUMBER NUMBER
@@ -819,7 +832,7 @@ state 30
     POP             shift and go to state 14
     PUSH            shift and go to state 17
     SCREEN          shift and go to state 22
-    SAVE            shift and go to state 32
+    SAVE            shift and go to state 33
     DISPLAY         shift and go to state 10
     SPHERE          shift and go to state 25
     TORUS           shift and go to state 19
@@ -827,14 +840,15 @@ state 30
     LINE            shift and go to state 9
     MOVE            shift and go to state 4
     SCALE           shift and go to state 3
-    ROTATE          shift and go to state 28
+    ROTATE          shift and go to state 29
+    SHEAR           shift and go to state 28
     FRAMES          shift and go to state 8
     BASENAME        shift and go to state 11
     VARY            shift and go to state 5
     SET             shift and go to state 13
-    SET_KNOBS       shift and go to state 29
-    AMBIENT         shift and go to state 31
-    CONSTANTS       shift and go to state 33
+    SET_KNOBS       shift and go to state 30
+    AMBIENT         shift and go to state 32
+    CONSTANTS       shift and go to state 34
     LIGHT           shift and go to state 16
     SHADING         shift and go to state 27
     CAMERA          shift and go to state 15
@@ -847,19 +861,19 @@ state 30
     WEB             shift and go to state 21
     TEXTURE         shift and go to state 6
 
-    input                          shift and go to state 66
-    command                        shift and go to state 30
+    input                          shift and go to state 68
+    command                        shift and go to state 31
 
-state 31
+state 32
 
     (48) command -> AMBIENT . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 67
+    NUMBER                         shift and go to state 69
 
-state 32
+state 33
 
     (13) command -> SAVE . TEXT TEXT
     (6) TEXT -> . SYMBOL
@@ -867,26 +881,26 @@ state 32
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    STRING          shift and go to state 47
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    STRING          shift and go to state 48
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    TEXT                           shift and go to state 68
-    SYMBOL                         shift and go to state 49
+    TEXT                           shift and go to state 70
+    SYMBOL                         shift and go to state 50
 
-state 33
+state 34
 
     (49) command -> CONSTANTS . SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS . SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 69
+    SYMBOL                         shift and go to state 71
 
-state 34
+state 35
 
     (8) NUMBER -> DOUBLE .
 
@@ -906,6 +920,7 @@ state 34
     MOVE            reduce using rule 8 (NUMBER -> DOUBLE .)
     SCALE           reduce using rule 8 (NUMBER -> DOUBLE .)
     ROTATE          reduce using rule 8 (NUMBER -> DOUBLE .)
+    SHEAR           reduce using rule 8 (NUMBER -> DOUBLE .)
     FRAMES          reduce using rule 8 (NUMBER -> DOUBLE .)
     BASENAME        reduce using rule 8 (NUMBER -> DOUBLE .)
     VARY            reduce using rule 8 (NUMBER -> DOUBLE .)
@@ -927,33 +942,30 @@ state 34
     $end            reduce using rule 8 (NUMBER -> DOUBLE .)
 
 
-state 35
+state 36
 
     (25) command -> BOX SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (26) command -> BOX SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 70
+    NUMBER                         shift and go to state 72
 
-state 36
+state 37
 
     (23) command -> BOX NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (24) command -> BOX NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 71
+    NUMBER                         shift and go to state 73
 
-state 37
+state 38
 
     (5) SYMBOL -> ID .
 
-    DOUBLE          reduce using rule 5 (SYMBOL -> ID .)
-    XYZ             reduce using rule 5 (SYMBOL -> ID .)
-    ID              reduce using rule 5 (SYMBOL -> ID .)
     COMMENT         reduce using rule 5 (SYMBOL -> ID .)
     POP             reduce using rule 5 (SYMBOL -> ID .)
     PUSH            reduce using rule 5 (SYMBOL -> ID .)
@@ -967,6 +979,7 @@ state 37
     MOVE            reduce using rule 5 (SYMBOL -> ID .)
     SCALE           reduce using rule 5 (SYMBOL -> ID .)
     ROTATE          reduce using rule 5 (SYMBOL -> ID .)
+    SHEAR           reduce using rule 5 (SYMBOL -> ID .)
     FRAMES          reduce using rule 5 (SYMBOL -> ID .)
     BASENAME        reduce using rule 5 (SYMBOL -> ID .)
     VARY            reduce using rule 5 (SYMBOL -> ID .)
@@ -986,17 +999,17 @@ state 37
     WEB             reduce using rule 5 (SYMBOL -> ID .)
     TEXTURE         reduce using rule 5 (SYMBOL -> ID .)
     $end            reduce using rule 5 (SYMBOL -> ID .)
-    STRING          reduce using rule 5 (SYMBOL -> ID .)
+    DOUBLE          reduce using rule 5 (SYMBOL -> ID .)
     CO              reduce using rule 5 (SYMBOL -> ID .)
+    XYZ             reduce using rule 5 (SYMBOL -> ID .)
+    ID              reduce using rule 5 (SYMBOL -> ID .)
+    STRING          reduce using rule 5 (SYMBOL -> ID .)
 
 
-state 38
+state 39
 
     (4) SYMBOL -> XYZ .
 
-    DOUBLE          reduce using rule 4 (SYMBOL -> XYZ .)
-    XYZ             reduce using rule 4 (SYMBOL -> XYZ .)
-    ID              reduce using rule 4 (SYMBOL -> XYZ .)
     COMMENT         reduce using rule 4 (SYMBOL -> XYZ .)
     POP             reduce using rule 4 (SYMBOL -> XYZ .)
     PUSH            reduce using rule 4 (SYMBOL -> XYZ .)
@@ -1010,6 +1023,7 @@ state 38
     MOVE            reduce using rule 4 (SYMBOL -> XYZ .)
     SCALE           reduce using rule 4 (SYMBOL -> XYZ .)
     ROTATE          reduce using rule 4 (SYMBOL -> XYZ .)
+    SHEAR           reduce using rule 4 (SYMBOL -> XYZ .)
     FRAMES          reduce using rule 4 (SYMBOL -> XYZ .)
     BASENAME        reduce using rule 4 (SYMBOL -> XYZ .)
     VARY            reduce using rule 4 (SYMBOL -> XYZ .)
@@ -1029,49 +1043,52 @@ state 38
     WEB             reduce using rule 4 (SYMBOL -> XYZ .)
     TEXTURE         reduce using rule 4 (SYMBOL -> XYZ .)
     $end            reduce using rule 4 (SYMBOL -> XYZ .)
-    STRING          reduce using rule 4 (SYMBOL -> XYZ .)
+    DOUBLE          reduce using rule 4 (SYMBOL -> XYZ .)
     CO              reduce using rule 4 (SYMBOL -> XYZ .)
+    XYZ             reduce using rule 4 (SYMBOL -> XYZ .)
+    ID              reduce using rule 4 (SYMBOL -> XYZ .)
+    STRING          reduce using rule 4 (SYMBOL -> XYZ .)
 
 
-state 39
+state 40
 
     (37) command -> SCALE NUMBER . NUMBER NUMBER SYMBOL
     (38) command -> SCALE NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 72
+    NUMBER                         shift and go to state 74
 
-state 40
+state 41
 
     (35) command -> MOVE NUMBER . NUMBER NUMBER SYMBOL
     (36) command -> MOVE NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 73
+    NUMBER                         shift and go to state 75
 
-state 41
+state 42
 
     (45) command -> VARY SYMBOL . NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 74
+    NUMBER                         shift and go to state 76
 
-state 42
+state 43
 
     (64) command -> TEXTURE SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 75
+    NUMBER                         shift and go to state 77
 
-state 43
+state 44
 
     (60) command -> SAVE_COORDS SYMBOL .
 
@@ -1088,6 +1105,7 @@ state 43
     MOVE            reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
     SCALE           reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
     ROTATE          reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
+    SHEAR           reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
     FRAMES          reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
     BASENAME        reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
     VARY            reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
@@ -1109,7 +1127,7 @@ state 43
     $end            reduce using rule 60 (command -> SAVE_COORDS SYMBOL .)
 
 
-state 44
+state 45
 
     (43) command -> FRAMES NUMBER .
 
@@ -1126,6 +1144,7 @@ state 44
     MOVE            reduce using rule 43 (command -> FRAMES NUMBER .)
     SCALE           reduce using rule 43 (command -> FRAMES NUMBER .)
     ROTATE          reduce using rule 43 (command -> FRAMES NUMBER .)
+    SHEAR           reduce using rule 43 (command -> FRAMES NUMBER .)
     FRAMES          reduce using rule 43 (command -> FRAMES NUMBER .)
     BASENAME        reduce using rule 43 (command -> FRAMES NUMBER .)
     VARY            reduce using rule 43 (command -> FRAMES NUMBER .)
@@ -1147,7 +1166,7 @@ state 44
     $end            reduce using rule 43 (command -> FRAMES NUMBER .)
 
 
-state 45
+state 46
 
     (27) command -> LINE NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (28) command -> LINE NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
@@ -1155,11 +1174,11 @@ state 45
     (30) command -> LINE NUMBER . NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 76
+    NUMBER                         shift and go to state 78
 
-state 46
+state 47
 
     (31) command -> LINE SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (32) command -> LINE SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
@@ -1167,17 +1186,14 @@ state 46
     (34) command -> LINE SYMBOL . NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 77
+    NUMBER                         shift and go to state 79
 
-state 47
+state 48
 
     (7) TEXT -> STRING .
 
-    STRING          reduce using rule 7 (TEXT -> STRING .)
-    XYZ             reduce using rule 7 (TEXT -> STRING .)
-    ID              reduce using rule 7 (TEXT -> STRING .)
     COMMENT         reduce using rule 7 (TEXT -> STRING .)
     POP             reduce using rule 7 (TEXT -> STRING .)
     PUSH            reduce using rule 7 (TEXT -> STRING .)
@@ -1191,6 +1207,7 @@ state 47
     MOVE            reduce using rule 7 (TEXT -> STRING .)
     SCALE           reduce using rule 7 (TEXT -> STRING .)
     ROTATE          reduce using rule 7 (TEXT -> STRING .)
+    SHEAR           reduce using rule 7 (TEXT -> STRING .)
     FRAMES          reduce using rule 7 (TEXT -> STRING .)
     BASENAME        reduce using rule 7 (TEXT -> STRING .)
     VARY            reduce using rule 7 (TEXT -> STRING .)
@@ -1210,9 +1227,12 @@ state 47
     WEB             reduce using rule 7 (TEXT -> STRING .)
     TEXTURE         reduce using rule 7 (TEXT -> STRING .)
     $end            reduce using rule 7 (TEXT -> STRING .)
+    STRING          reduce using rule 7 (TEXT -> STRING .)
+    XYZ             reduce using rule 7 (TEXT -> STRING .)
+    ID              reduce using rule 7 (TEXT -> STRING .)
 
 
-state 48
+state 49
 
     (44) command -> BASENAME TEXT .
 
@@ -1229,6 +1249,7 @@ state 48
     MOVE            reduce using rule 44 (command -> BASENAME TEXT .)
     SCALE           reduce using rule 44 (command -> BASENAME TEXT .)
     ROTATE          reduce using rule 44 (command -> BASENAME TEXT .)
+    SHEAR           reduce using rule 44 (command -> BASENAME TEXT .)
     FRAMES          reduce using rule 44 (command -> BASENAME TEXT .)
     BASENAME        reduce using rule 44 (command -> BASENAME TEXT .)
     VARY            reduce using rule 44 (command -> BASENAME TEXT .)
@@ -1250,13 +1271,10 @@ state 48
     $end            reduce using rule 44 (command -> BASENAME TEXT .)
 
 
-state 49
+state 50
 
     (6) TEXT -> SYMBOL .
 
-    STRING          reduce using rule 6 (TEXT -> SYMBOL .)
-    XYZ             reduce using rule 6 (TEXT -> SYMBOL .)
-    ID              reduce using rule 6 (TEXT -> SYMBOL .)
     COMMENT         reduce using rule 6 (TEXT -> SYMBOL .)
     POP             reduce using rule 6 (TEXT -> SYMBOL .)
     PUSH            reduce using rule 6 (TEXT -> SYMBOL .)
@@ -1270,6 +1288,7 @@ state 49
     MOVE            reduce using rule 6 (TEXT -> SYMBOL .)
     SCALE           reduce using rule 6 (TEXT -> SYMBOL .)
     ROTATE          reduce using rule 6 (TEXT -> SYMBOL .)
+    SHEAR           reduce using rule 6 (TEXT -> SYMBOL .)
     FRAMES          reduce using rule 6 (TEXT -> SYMBOL .)
     BASENAME        reduce using rule 6 (TEXT -> SYMBOL .)
     VARY            reduce using rule 6 (TEXT -> SYMBOL .)
@@ -1289,56 +1308,59 @@ state 49
     WEB             reduce using rule 6 (TEXT -> SYMBOL .)
     TEXTURE         reduce using rule 6 (TEXT -> SYMBOL .)
     $end            reduce using rule 6 (TEXT -> SYMBOL .)
+    STRING          reduce using rule 6 (TEXT -> SYMBOL .)
+    XYZ             reduce using rule 6 (TEXT -> SYMBOL .)
+    ID              reduce using rule 6 (TEXT -> SYMBOL .)
 
 
-state 50
+state 51
 
     (46) command -> SET SYMBOL . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 78
+    NUMBER                         shift and go to state 80
 
-state 51
+state 52
 
     (53) command -> CAMERA NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 79
+    NUMBER                         shift and go to state 81
 
-state 52
+state 53
 
     (51) command -> LIGHT SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 80
+    NUMBER                         shift and go to state 82
 
-state 53
+state 54
 
     (19) command -> TORUS NUMBER . NUMBER NUMBER NUMBER NUMBER
     (20) command -> TORUS NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 81
+    NUMBER                         shift and go to state 83
 
-state 54
+state 55
 
     (21) command -> TORUS SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER
     (22) command -> TORUS SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 82
+    NUMBER                         shift and go to state 84
 
-state 55
+state 56
 
     (62) command -> FOCAL NUMBER .
 
@@ -1355,6 +1377,7 @@ state 55
     MOVE            reduce using rule 62 (command -> FOCAL NUMBER .)
     SCALE           reduce using rule 62 (command -> FOCAL NUMBER .)
     ROTATE          reduce using rule 62 (command -> FOCAL NUMBER .)
+    SHEAR           reduce using rule 62 (command -> FOCAL NUMBER .)
     FRAMES          reduce using rule 62 (command -> FOCAL NUMBER .)
     BASENAME        reduce using rule 62 (command -> FOCAL NUMBER .)
     VARY            reduce using rule 62 (command -> FOCAL NUMBER .)
@@ -1376,16 +1399,16 @@ state 55
     $end            reduce using rule 62 (command -> FOCAL NUMBER .)
 
 
-state 56
+state 57
 
     (11) command -> SCREEN NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 83
+    NUMBER                         shift and go to state 85
 
-state 57
+state 58
 
     (59) command -> SAVE_KNOBS SYMBOL .
 
@@ -1402,6 +1425,7 @@ state 57
     MOVE            reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
     SCALE           reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
     ROTATE          reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
+    SHEAR           reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
     FRAMES          reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
     BASENAME        reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
     VARY            reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
@@ -1423,36 +1447,36 @@ state 57
     $end            reduce using rule 59 (command -> SAVE_KNOBS SYMBOL .)
 
 
-state 58
+state 59
 
     (61) command -> TWEEN NUMBER . NUMBER SYMBOL SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 84
+    NUMBER                         shift and go to state 86
 
-state 59
+state 60
 
     (16) command -> SPHERE SYMBOL . NUMBER NUMBER NUMBER NUMBER
     (18) command -> SPHERE SYMBOL . NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 85
+    NUMBER                         shift and go to state 87
 
-state 60
+state 61
 
     (15) command -> SPHERE NUMBER . NUMBER NUMBER NUMBER
     (17) command -> SPHERE NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 86
+    NUMBER                         shift and go to state 88
 
-state 61
+state 62
 
     (55) command -> MESH CO . TEXT
     (57) command -> MESH CO . TEXT SYMBOL
@@ -1461,22 +1485,22 @@ state 61
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    STRING          shift and go to state 47
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    STRING          shift and go to state 48
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    TEXT                           shift and go to state 87
-    SYMBOL                         shift and go to state 49
+    TEXT                           shift and go to state 89
+    SYMBOL                         shift and go to state 50
 
-state 62
+state 63
 
     (56) command -> MESH SYMBOL . CO TEXT
     (58) command -> MESH SYMBOL . CO TEXT SYMBOL
 
-    CO              shift and go to state 88
+    CO              shift and go to state 90
 
 
-state 63
+state 64
 
     (52) command -> SHADING SHADING_TYPE .
 
@@ -1493,6 +1517,7 @@ state 63
     MOVE            reduce using rule 52 (command -> SHADING SHADING_TYPE .)
     SCALE           reduce using rule 52 (command -> SHADING SHADING_TYPE .)
     ROTATE          reduce using rule 52 (command -> SHADING SHADING_TYPE .)
+    SHEAR           reduce using rule 52 (command -> SHADING SHADING_TYPE .)
     FRAMES          reduce using rule 52 (command -> SHADING SHADING_TYPE .)
     BASENAME        reduce using rule 52 (command -> SHADING SHADING_TYPE .)
     VARY            reduce using rule 52 (command -> SHADING SHADING_TYPE .)
@@ -1514,19 +1539,27 @@ state 63
     $end            reduce using rule 52 (command -> SHADING SHADING_TYPE .)
 
 
-state 64
+state 65
+
+    (41) command -> SHEAR XYZ . NUMBER NUMBER NUMBER SYMBOL
+    (42) command -> SHEAR XYZ . NUMBER NUMBER NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 91
+
+state 66
 
     (39) command -> ROTATE XYZ . NUMBER SYMBOL
     (40) command -> ROTATE XYZ . NUMBER
-    (41) command -> ROTATE XYZ . NUMBER NUMBER NUMBER SYMBOL
-    (42) command -> ROTATE XYZ . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 89
+    NUMBER                         shift and go to state 92
 
-state 65
+state 67
 
     (47) command -> SET_KNOBS NUMBER .
 
@@ -1543,6 +1576,7 @@ state 65
     MOVE            reduce using rule 47 (command -> SET_KNOBS NUMBER .)
     SCALE           reduce using rule 47 (command -> SET_KNOBS NUMBER .)
     ROTATE          reduce using rule 47 (command -> SET_KNOBS NUMBER .)
+    SHEAR           reduce using rule 47 (command -> SET_KNOBS NUMBER .)
     FRAMES          reduce using rule 47 (command -> SET_KNOBS NUMBER .)
     BASENAME        reduce using rule 47 (command -> SET_KNOBS NUMBER .)
     VARY            reduce using rule 47 (command -> SET_KNOBS NUMBER .)
@@ -1564,23 +1598,23 @@ state 65
     $end            reduce using rule 47 (command -> SET_KNOBS NUMBER .)
 
 
-state 66
+state 68
 
     (2) input -> command input .
 
     $end            reduce using rule 2 (input -> command input .)
 
 
-state 67
+state 69
 
     (48) command -> AMBIENT NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 90
+    NUMBER                         shift and go to state 93
 
-state 68
+state 70
 
     (13) command -> SAVE TEXT . TEXT
     (6) TEXT -> . SYMBOL
@@ -1588,82 +1622,82 @@ state 68
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    STRING          shift and go to state 47
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    STRING          shift and go to state 48
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    TEXT                           shift and go to state 91
-    SYMBOL                         shift and go to state 49
+    TEXT                           shift and go to state 94
+    SYMBOL                         shift and go to state 50
 
-state 69
+state 71
 
     (49) command -> CONSTANTS SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 92
+    NUMBER                         shift and go to state 95
 
-state 70
+state 72
 
     (25) command -> BOX SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (26) command -> BOX SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 93
+    NUMBER                         shift and go to state 96
 
-state 71
+state 73
 
     (23) command -> BOX NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (24) command -> BOX NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 94
+    NUMBER                         shift and go to state 97
 
-state 72
+state 74
 
     (37) command -> SCALE NUMBER NUMBER . NUMBER SYMBOL
     (38) command -> SCALE NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 95
+    NUMBER                         shift and go to state 98
 
-state 73
+state 75
 
     (35) command -> MOVE NUMBER NUMBER . NUMBER SYMBOL
     (36) command -> MOVE NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 96
+    NUMBER                         shift and go to state 99
 
-state 74
+state 76
 
     (45) command -> VARY SYMBOL NUMBER . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 97
+    NUMBER                         shift and go to state 100
 
-state 75
+state 77
 
     (64) command -> TEXTURE SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 98
+    NUMBER                         shift and go to state 101
 
-state 76
+state 78
 
     (27) command -> LINE NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (28) command -> LINE NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
@@ -1671,11 +1705,11 @@ state 76
     (30) command -> LINE NUMBER NUMBER . NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 99
+    NUMBER                         shift and go to state 102
 
-state 77
+state 79
 
     (31) command -> LINE SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (32) command -> LINE SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
@@ -1683,11 +1717,11 @@ state 77
     (34) command -> LINE SYMBOL NUMBER . NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 100
+    NUMBER                         shift and go to state 103
 
-state 78
+state 80
 
     (46) command -> SET SYMBOL NUMBER .
 
@@ -1704,6 +1738,7 @@ state 78
     MOVE            reduce using rule 46 (command -> SET SYMBOL NUMBER .)
     SCALE           reduce using rule 46 (command -> SET SYMBOL NUMBER .)
     ROTATE          reduce using rule 46 (command -> SET SYMBOL NUMBER .)
+    SHEAR           reduce using rule 46 (command -> SET SYMBOL NUMBER .)
     FRAMES          reduce using rule 46 (command -> SET SYMBOL NUMBER .)
     BASENAME        reduce using rule 46 (command -> SET SYMBOL NUMBER .)
     VARY            reduce using rule 46 (command -> SET SYMBOL NUMBER .)
@@ -1725,45 +1760,45 @@ state 78
     $end            reduce using rule 46 (command -> SET SYMBOL NUMBER .)
 
 
-state 79
+state 81
 
     (53) command -> CAMERA NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 101
+    NUMBER                         shift and go to state 104
 
-state 80
+state 82
 
     (51) command -> LIGHT SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 102
+    NUMBER                         shift and go to state 105
 
-state 81
+state 83
 
     (19) command -> TORUS NUMBER NUMBER . NUMBER NUMBER NUMBER
     (20) command -> TORUS NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 103
+    NUMBER                         shift and go to state 106
 
-state 82
+state 84
 
     (21) command -> TORUS SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER
     (22) command -> TORUS SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 104
+    NUMBER                         shift and go to state 107
 
-state 83
+state 85
 
     (11) command -> SCREEN NUMBER NUMBER .
 
@@ -1780,6 +1815,7 @@ state 83
     MOVE            reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
     SCALE           reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
     ROTATE          reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
+    SHEAR           reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
     FRAMES          reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
     BASENAME        reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
     VARY            reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
@@ -1801,38 +1837,38 @@ state 83
     $end            reduce using rule 11 (command -> SCREEN NUMBER NUMBER .)
 
 
-state 84
+state 86
 
     (61) command -> TWEEN NUMBER NUMBER . SYMBOL SYMBOL
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 105
+    SYMBOL                         shift and go to state 108
 
-state 85
+state 87
 
     (16) command -> SPHERE SYMBOL NUMBER . NUMBER NUMBER NUMBER
     (18) command -> SPHERE SYMBOL NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 106
+    NUMBER                         shift and go to state 109
 
-state 86
+state 88
 
     (15) command -> SPHERE NUMBER NUMBER . NUMBER NUMBER
     (17) command -> SPHERE NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 107
+    NUMBER                         shift and go to state 110
 
-state 87
+state 89
 
     (55) command -> MESH CO TEXT .
     (57) command -> MESH CO TEXT . SYMBOL
@@ -1852,6 +1888,7 @@ state 87
     MOVE            reduce using rule 55 (command -> MESH CO TEXT .)
     SCALE           reduce using rule 55 (command -> MESH CO TEXT .)
     ROTATE          reduce using rule 55 (command -> MESH CO TEXT .)
+    SHEAR           reduce using rule 55 (command -> MESH CO TEXT .)
     FRAMES          reduce using rule 55 (command -> MESH CO TEXT .)
     BASENAME        reduce using rule 55 (command -> MESH CO TEXT .)
     VARY            reduce using rule 55 (command -> MESH CO TEXT .)
@@ -1871,12 +1908,12 @@ state 87
     WEB             reduce using rule 55 (command -> MESH CO TEXT .)
     TEXTURE         reduce using rule 55 (command -> MESH CO TEXT .)
     $end            reduce using rule 55 (command -> MESH CO TEXT .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 108
+    SYMBOL                         shift and go to state 111
 
-state 88
+state 90
 
     (56) command -> MESH SYMBOL CO . TEXT
     (58) command -> MESH SYMBOL CO . TEXT SYMBOL
@@ -1885,22 +1922,29 @@ state 88
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    STRING          shift and go to state 47
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    STRING          shift and go to state 48
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    TEXT                           shift and go to state 109
-    SYMBOL                         shift and go to state 49
+    TEXT                           shift and go to state 112
+    SYMBOL                         shift and go to state 50
 
-state 89
+state 91
+
+    (41) command -> SHEAR XYZ NUMBER . NUMBER NUMBER SYMBOL
+    (42) command -> SHEAR XYZ NUMBER . NUMBER NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 113
+
+state 92
 
     (39) command -> ROTATE XYZ NUMBER . SYMBOL
     (40) command -> ROTATE XYZ NUMBER .
-    (41) command -> ROTATE XYZ NUMBER . NUMBER NUMBER SYMBOL
-    (42) command -> ROTATE XYZ NUMBER . NUMBER NUMBER
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
-    (8) NUMBER -> . DOUBLE
 
     COMMENT         reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     POP             reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
@@ -1915,6 +1959,7 @@ state 89
     MOVE            reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     SCALE           reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     ROTATE          reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
+    SHEAR           reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     FRAMES          reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     BASENAME        reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     VARY            reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
@@ -1934,23 +1979,21 @@ state 89
     WEB             reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     TEXTURE         reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
     $end            reduce using rule 40 (command -> ROTATE XYZ NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
-    DOUBLE          shift and go to state 34
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 111
-    NUMBER                         shift and go to state 110
+    SYMBOL                         shift and go to state 114
 
-state 90
+state 93
 
     (48) command -> AMBIENT NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 112
+    NUMBER                         shift and go to state 115
 
-state 91
+state 94
 
     (13) command -> SAVE TEXT TEXT .
 
@@ -1967,6 +2010,7 @@ state 91
     MOVE            reduce using rule 13 (command -> SAVE TEXT TEXT .)
     SCALE           reduce using rule 13 (command -> SAVE TEXT TEXT .)
     ROTATE          reduce using rule 13 (command -> SAVE TEXT TEXT .)
+    SHEAR           reduce using rule 13 (command -> SAVE TEXT TEXT .)
     FRAMES          reduce using rule 13 (command -> SAVE TEXT TEXT .)
     BASENAME        reduce using rule 13 (command -> SAVE TEXT TEXT .)
     VARY            reduce using rule 13 (command -> SAVE TEXT TEXT .)
@@ -1988,37 +2032,37 @@ state 91
     $end            reduce using rule 13 (command -> SAVE TEXT TEXT .)
 
 
-state 92
+state 95
 
     (49) command -> CONSTANTS SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 113
+    NUMBER                         shift and go to state 116
 
-state 93
+state 96
 
     (25) command -> BOX SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (26) command -> BOX SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 114
+    NUMBER                         shift and go to state 117
 
-state 94
+state 97
 
     (23) command -> BOX NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (24) command -> BOX NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 115
+    NUMBER                         shift and go to state 118
 
-state 95
+state 98
 
     (37) command -> SCALE NUMBER NUMBER NUMBER . SYMBOL
     (38) command -> SCALE NUMBER NUMBER NUMBER .
@@ -2038,6 +2082,7 @@ state 95
     MOVE            reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
@@ -2057,12 +2102,12 @@ state 95
     WEB             reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
     $end            reduce using rule 38 (command -> SCALE NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 116
+    SYMBOL                         shift and go to state 119
 
-state 96
+state 99
 
     (35) command -> MOVE NUMBER NUMBER NUMBER . SYMBOL
     (36) command -> MOVE NUMBER NUMBER NUMBER .
@@ -2082,6 +2127,7 @@ state 96
     MOVE            reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
@@ -2101,30 +2147,30 @@ state 96
     WEB             reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
     $end            reduce using rule 36 (command -> MOVE NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 117
+    SYMBOL                         shift and go to state 120
 
-state 97
+state 100
 
     (45) command -> VARY SYMBOL NUMBER NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 118
+    NUMBER                         shift and go to state 121
 
-state 98
+state 101
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 119
+    NUMBER                         shift and go to state 122
 
-state 99
+state 102
 
     (27) command -> LINE NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (28) command -> LINE NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
@@ -2134,14 +2180,14 @@ state 99
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 121
-    NUMBER                         shift and go to state 120
+    SYMBOL                         shift and go to state 124
+    NUMBER                         shift and go to state 123
 
-state 100
+state 103
 
     (31) command -> LINE SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (32) command -> LINE SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER SYMBOL
@@ -2149,80 +2195,80 @@ state 100
     (34) command -> LINE SYMBOL NUMBER NUMBER . NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 122
-
-state 101
-
-    (53) command -> CAMERA NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 123
-
-state 102
-
-    (51) command -> LIGHT SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 124
-
-state 103
-
-    (19) command -> TORUS NUMBER NUMBER NUMBER . NUMBER NUMBER
-    (20) command -> TORUS NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 125
 
 state 104
 
-    (21) command -> TORUS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER
-    (22) command -> TORUS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
+    (53) command -> CAMERA NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 126
 
 state 105
 
-    (61) command -> TWEEN NUMBER NUMBER SYMBOL . SYMBOL
-    (4) SYMBOL -> . XYZ
-    (5) SYMBOL -> . ID
+    (51) command -> LIGHT SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
+    (8) NUMBER -> . DOUBLE
 
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
 
-    SYMBOL                         shift and go to state 127
+    NUMBER                         shift and go to state 127
 
 state 106
 
-    (16) command -> SPHERE SYMBOL NUMBER NUMBER . NUMBER NUMBER
-    (18) command -> SPHERE SYMBOL NUMBER NUMBER . NUMBER NUMBER SYMBOL
+    (19) command -> TORUS NUMBER NUMBER NUMBER . NUMBER NUMBER
+    (20) command -> TORUS NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 128
 
 state 107
 
-    (15) command -> SPHERE NUMBER NUMBER NUMBER . NUMBER
-    (17) command -> SPHERE NUMBER NUMBER NUMBER . NUMBER SYMBOL
+    (21) command -> TORUS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER
+    (22) command -> TORUS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 129
 
 state 108
+
+    (61) command -> TWEEN NUMBER NUMBER SYMBOL . SYMBOL
+    (4) SYMBOL -> . XYZ
+    (5) SYMBOL -> . ID
+
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
+
+    SYMBOL                         shift and go to state 130
+
+state 109
+
+    (16) command -> SPHERE SYMBOL NUMBER NUMBER . NUMBER NUMBER
+    (18) command -> SPHERE SYMBOL NUMBER NUMBER . NUMBER NUMBER SYMBOL
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 131
+
+state 110
+
+    (15) command -> SPHERE NUMBER NUMBER NUMBER . NUMBER
+    (17) command -> SPHERE NUMBER NUMBER NUMBER . NUMBER SYMBOL
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 132
+
+state 111
 
     (57) command -> MESH CO TEXT SYMBOL .
 
@@ -2239,6 +2285,7 @@ state 108
     MOVE            reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
     SCALE           reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
     ROTATE          reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
+    SHEAR           reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
     FRAMES          reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
     BASENAME        reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
     VARY            reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
@@ -2260,7 +2307,7 @@ state 108
     $end            reduce using rule 57 (command -> MESH CO TEXT SYMBOL .)
 
 
-state 109
+state 112
 
     (56) command -> MESH SYMBOL CO TEXT .
     (58) command -> MESH SYMBOL CO TEXT . SYMBOL
@@ -2280,6 +2327,7 @@ state 109
     MOVE            reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     SCALE           reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     ROTATE          reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
+    SHEAR           reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     FRAMES          reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     BASENAME        reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     VARY            reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
@@ -2299,22 +2347,22 @@ state 109
     WEB             reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     TEXTURE         reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
     $end            reduce using rule 56 (command -> MESH SYMBOL CO TEXT .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 130
+    SYMBOL                         shift and go to state 133
 
-state 110
+state 113
 
-    (41) command -> ROTATE XYZ NUMBER NUMBER . NUMBER SYMBOL
-    (42) command -> ROTATE XYZ NUMBER NUMBER . NUMBER
+    (41) command -> SHEAR XYZ NUMBER NUMBER . NUMBER SYMBOL
+    (42) command -> SHEAR XYZ NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 131
+    NUMBER                         shift and go to state 134
 
-state 111
+state 114
 
     (39) command -> ROTATE XYZ NUMBER SYMBOL .
 
@@ -2331,6 +2379,7 @@ state 111
     MOVE            reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
     SCALE           reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
     ROTATE          reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
+    SHEAR           reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
     FRAMES          reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
     BASENAME        reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
     VARY            reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
@@ -2352,7 +2401,7 @@ state 111
     $end            reduce using rule 39 (command -> ROTATE XYZ NUMBER SYMBOL .)
 
 
-state 112
+state 115
 
     (48) command -> AMBIENT NUMBER NUMBER NUMBER .
 
@@ -2369,6 +2418,7 @@ state 112
     MOVE            reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
@@ -2390,37 +2440,37 @@ state 112
     $end            reduce using rule 48 (command -> AMBIENT NUMBER NUMBER NUMBER .)
 
 
-state 113
+state 116
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 132
+    NUMBER                         shift and go to state 135
 
-state 114
+state 117
 
     (25) command -> BOX SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (26) command -> BOX SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 133
+    NUMBER                         shift and go to state 136
 
-state 115
+state 118
 
     (23) command -> BOX NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (24) command -> BOX NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 134
+    NUMBER                         shift and go to state 137
 
-state 116
+state 119
 
     (37) command -> SCALE NUMBER NUMBER NUMBER SYMBOL .
 
@@ -2437,6 +2487,7 @@ state 116
     MOVE            reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
@@ -2458,7 +2509,7 @@ state 116
     $end            reduce using rule 37 (command -> SCALE NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 117
+state 120
 
     (35) command -> MOVE NUMBER NUMBER NUMBER SYMBOL .
 
@@ -2475,6 +2526,7 @@ state 117
     MOVE            reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
@@ -2496,45 +2548,45 @@ state 117
     $end            reduce using rule 35 (command -> MOVE NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 118
+state 121
 
     (45) command -> VARY SYMBOL NUMBER NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 135
+    NUMBER                         shift and go to state 138
 
-state 119
+state 122
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 136
+    NUMBER                         shift and go to state 139
 
-state 120
+state 123
 
     (27) command -> LINE NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (28) command -> LINE NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 137
+    NUMBER                         shift and go to state 140
 
-state 121
+state 124
 
     (29) command -> LINE NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER
     (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 138
+    NUMBER                         shift and go to state 141
 
-state 122
+state 125
 
     (31) command -> LINE SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER SYMBOL
@@ -2544,52 +2596,52 @@ state 122
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    DOUBLE          shift and go to state 34
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    DOUBLE          shift and go to state 35
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 139
-    NUMBER                         shift and go to state 140
+    SYMBOL                         shift and go to state 142
+    NUMBER                         shift and go to state 143
 
-state 123
+state 126
 
     (53) command -> CAMERA NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 141
+    NUMBER                         shift and go to state 144
 
-state 124
+state 127
 
     (51) command -> LIGHT SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 142
+    NUMBER                         shift and go to state 145
 
-state 125
+state 128
 
     (19) command -> TORUS NUMBER NUMBER NUMBER NUMBER . NUMBER
     (20) command -> TORUS NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 143
+    NUMBER                         shift and go to state 146
 
-state 126
+state 129
 
     (21) command -> TORUS SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER
     (22) command -> TORUS SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 144
+    NUMBER                         shift and go to state 147
 
-state 127
+state 130
 
     (61) command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .
 
@@ -2606,6 +2658,7 @@ state 127
     MOVE            reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
     SCALE           reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
     ROTATE          reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
+    SHEAR           reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
     FRAMES          reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
     BASENAME        reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
     VARY            reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
@@ -2627,17 +2680,17 @@ state 127
     $end            reduce using rule 61 (command -> TWEEN NUMBER NUMBER SYMBOL SYMBOL .)
 
 
-state 128
+state 131
 
     (16) command -> SPHERE SYMBOL NUMBER NUMBER NUMBER . NUMBER
     (18) command -> SPHERE SYMBOL NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 145
+    NUMBER                         shift and go to state 148
 
-state 129
+state 132
 
     (15) command -> SPHERE NUMBER NUMBER NUMBER NUMBER .
     (17) command -> SPHERE NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -2657,6 +2710,7 @@ state 129
     MOVE            reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
@@ -2676,12 +2730,12 @@ state 129
     WEB             reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 15 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 146
+    SYMBOL                         shift and go to state 149
 
-state 130
+state 133
 
     (58) command -> MESH SYMBOL CO TEXT SYMBOL .
 
@@ -2698,6 +2752,7 @@ state 130
     MOVE            reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
     SCALE           reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
     ROTATE          reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
+    SHEAR           reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
     FRAMES          reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
     BASENAME        reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
     VARY            reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
@@ -2719,81 +2774,82 @@ state 130
     $end            reduce using rule 58 (command -> MESH SYMBOL CO TEXT SYMBOL .)
 
 
-state 131
+state 134
 
-    (41) command -> ROTATE XYZ NUMBER NUMBER NUMBER . SYMBOL
-    (42) command -> ROTATE XYZ NUMBER NUMBER NUMBER .
+    (41) command -> SHEAR XYZ NUMBER NUMBER NUMBER . SYMBOL
+    (42) command -> SHEAR XYZ NUMBER NUMBER NUMBER .
     (4) SYMBOL -> . XYZ
     (5) SYMBOL -> . ID
 
-    COMMENT         reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    POP             reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    PUSH            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SCREEN          reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SAVE            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    DISPLAY         reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SPHERE          reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    TORUS           reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    BOX             reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    LINE            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    MOVE            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SCALE           reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    ROTATE          reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    FRAMES          reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    BASENAME        reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    VARY            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SET             reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SET_KNOBS       reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    AMBIENT         reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    CONSTANTS       reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    LIGHT           reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SHADING         reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    CAMERA          reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    GENERATE_RAYFILES reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    MESH            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SAVE_KNOBS      reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    SAVE_COORDS     reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    TWEEN           reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    FOCAL           reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    WEB             reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    TEXTURE         reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    $end            reduce using rule 42 (command -> ROTATE XYZ NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    COMMENT         reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    POP             reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    PUSH            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SCREEN          reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SAVE            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    DISPLAY         reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SPHERE          reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    TORUS           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    BOX             reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    LINE            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    MOVE            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SCALE           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    ROTATE          reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    FRAMES          reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    BASENAME        reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    VARY            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SET             reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SET_KNOBS       reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    AMBIENT         reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    CONSTANTS       reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    LIGHT           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SHADING         reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    CAMERA          reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    GENERATE_RAYFILES reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    MESH            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SAVE_KNOBS      reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    SAVE_COORDS     reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    TWEEN           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    FOCAL           reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    WEB             reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    TEXTURE         reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    $end            reduce using rule 42 (command -> SHEAR XYZ NUMBER NUMBER NUMBER .)
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 147
+    SYMBOL                         shift and go to state 150
 
-state 132
+state 135
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 148
+    NUMBER                         shift and go to state 151
 
-state 133
+state 136
 
     (25) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (26) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 149
+    NUMBER                         shift and go to state 152
 
-state 134
+state 137
 
     (23) command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
     (24) command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 150
+    NUMBER                         shift and go to state 153
 
-state 135
+state 138
 
     (45) command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .
 
@@ -2810,6 +2866,7 @@ state 135
     MOVE            reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
@@ -2831,74 +2888,74 @@ state 135
     $end            reduce using rule 45 (command -> VARY SYMBOL NUMBER NUMBER NUMBER NUMBER .)
 
 
-state 136
+state 139
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 151
-
-state 137
-
-    (27) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
-    (28) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 152
-
-state 138
-
-    (29) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER
-    (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER SYMBOL
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 153
-
-state 139
-
-    (33) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER
-    (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER SYMBOL
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 154
 
 state 140
 
-    (31) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
-    (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
+    (27) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (28) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 155
 
 state 141
 
-    (53) command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (29) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER
+    (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 156
 
 state 142
 
-    (51) command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
+    (33) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER
+    (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL . NUMBER NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 157
 
 state 143
+
+    (31) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
+    (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER SYMBOL
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 158
+
+state 144
+
+    (53) command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 159
+
+state 145
+
+    (51) command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 160
+
+state 146
 
     (19) command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .
     (20) command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -2918,6 +2975,7 @@ state 143
     MOVE            reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -2937,22 +2995,22 @@ state 143
     WEB             reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 19 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 158
+    SYMBOL                         shift and go to state 161
 
-state 144
+state 147
 
     (21) command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER
     (22) command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 159
+    NUMBER                         shift and go to state 162
 
-state 145
+state 148
 
     (16) command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .
     (18) command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -2972,6 +3030,7 @@ state 145
     MOVE            reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
@@ -2991,12 +3050,12 @@ state 145
     WEB             reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 16 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 160
+    SYMBOL                         shift and go to state 163
 
-state 146
+state 149
 
     (17) command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3013,6 +3072,7 @@ state 146
     MOVE            reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3034,65 +3094,66 @@ state 146
     $end            reduce using rule 17 (command -> SPHERE NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 147
+state 150
 
-    (41) command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .
+    (41) command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .
 
-    COMMENT         reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    POP             reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    PUSH            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SCREEN          reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SAVE            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    DISPLAY         reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SPHERE          reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    TORUS           reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    BOX             reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    LINE            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    MOVE            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SCALE           reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    ROTATE          reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    FRAMES          reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    BASENAME        reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    VARY            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SET             reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SET_KNOBS       reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    AMBIENT         reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    CONSTANTS       reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    LIGHT           reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SHADING         reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    CAMERA          reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    GENERATE_RAYFILES reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    MESH            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SAVE_KNOBS      reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    SAVE_COORDS     reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    TWEEN           reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    FOCAL           reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    WEB             reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    TEXTURE         reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
-    $end            reduce using rule 41 (command -> ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    COMMENT         reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    POP             reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    PUSH            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SCREEN          reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SAVE            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    DISPLAY         reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SPHERE          reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    TORUS           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    BOX             reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    LINE            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    MOVE            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SCALE           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    ROTATE          reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    FRAMES          reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    BASENAME        reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    VARY            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SET             reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SET_KNOBS       reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    AMBIENT         reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    CONSTANTS       reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    LIGHT           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SHADING         reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    CAMERA          reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    GENERATE_RAYFILES reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    MESH            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SAVE_KNOBS      reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    SAVE_COORDS     reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    TWEEN           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    FOCAL           reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    WEB             reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    TEXTURE         reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
+    $end            reduce using rule 41 (command -> SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 148
+state 151
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 161
+    NUMBER                         shift and go to state 164
 
-state 149
+state 152
 
     (25) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
     (26) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 162
+    NUMBER                         shift and go to state 165
 
-state 150
+state 153
 
     (23) command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
     (24) command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -3112,6 +3173,7 @@ state 150
     MOVE            reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3131,21 +3193,21 @@ state 150
     WEB             reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 23 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 163
+    SYMBOL                         shift and go to state 166
 
-state 151
+state 154
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 164
+    NUMBER                         shift and go to state 167
 
-state 152
+state 155
 
     (27) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
     (28) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -3165,6 +3227,7 @@ state 152
     MOVE            reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3184,42 +3247,42 @@ state 152
     WEB             reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 27 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 165
+    SYMBOL                         shift and go to state 168
 
-state 153
+state 156
 
     (29) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER . NUMBER
     (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 166
+    NUMBER                         shift and go to state 169
 
-state 154
+state 157
 
     (33) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER
     (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER . NUMBER NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 167
+    NUMBER                         shift and go to state 170
 
-state 155
+state 158
 
     (31) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
     (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 168
+    NUMBER                         shift and go to state 171
 
-state 156
+state 159
 
     (53) command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
 
@@ -3236,6 +3299,7 @@ state 156
     MOVE            reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3257,16 +3321,16 @@ state 156
     $end            reduce using rule 53 (command -> CAMERA NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
 
 
-state 157
+state 160
 
     (51) command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 169
+    NUMBER                         shift and go to state 172
 
-state 158
+state 161
 
     (20) command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3283,6 +3347,7 @@ state 158
     MOVE            reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3304,7 +3369,7 @@ state 158
     $end            reduce using rule 20 (command -> TORUS NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 159
+state 162
 
     (21) command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .
     (22) command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -3324,6 +3389,7 @@ state 159
     MOVE            reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3343,12 +3409,12 @@ state 159
     WEB             reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 21 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 170
+    SYMBOL                         shift and go to state 173
 
-state 160
+state 163
 
     (18) command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3365,6 +3431,7 @@ state 160
     MOVE            reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3386,17 +3453,17 @@ state 160
     $end            reduce using rule 18 (command -> SPHERE SYMBOL NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 161
+state 164
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 171
+    NUMBER                         shift and go to state 174
 
-state 162
+state 165
 
     (25) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
     (26) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -3416,6 +3483,7 @@ state 162
     MOVE            reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3435,12 +3503,12 @@ state 162
     WEB             reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 25 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 172
+    SYMBOL                         shift and go to state 175
 
-state 163
+state 166
 
     (24) command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3457,6 +3525,7 @@ state 163
     MOVE            reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3478,16 +3547,16 @@ state 163
     $end            reduce using rule 24 (command -> BOX NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 164
+state 167
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 173
+    NUMBER                         shift and go to state 176
 
-state 165
+state 168
 
     (28) command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3504,6 +3573,7 @@ state 165
     MOVE            reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3525,7 +3595,7 @@ state 165
     $end            reduce using rule 28 (command -> LINE NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 166
+state 169
 
     (29) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .
     (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER . SYMBOL
@@ -3545,6 +3615,7 @@ state 166
     MOVE            reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
@@ -3564,22 +3635,22 @@ state 166
     WEB             reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     $end            reduce using rule 29 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 174
+    SYMBOL                         shift and go to state 177
 
-state 167
+state 170
 
     (33) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER . NUMBER
     (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER . NUMBER SYMBOL
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 175
+    NUMBER                         shift and go to state 178
 
-state 168
+state 171
 
     (31) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
     (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . SYMBOL
@@ -3599,6 +3670,7 @@ state 168
     MOVE            reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3618,12 +3690,12 @@ state 168
     WEB             reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 31 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 176
+    SYMBOL                         shift and go to state 179
 
-state 169
+state 172
 
     (51) command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
 
@@ -3640,6 +3712,7 @@ state 169
     MOVE            reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3661,7 +3734,7 @@ state 169
     $end            reduce using rule 51 (command -> LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
 
 
-state 170
+state 173
 
     (22) command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3678,6 +3751,7 @@ state 170
     MOVE            reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3699,17 +3773,17 @@ state 170
     $end            reduce using rule 22 (command -> TORUS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 171
+state 174
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 177
+    NUMBER                         shift and go to state 180
 
-state 172
+state 175
 
     (26) command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3726,6 +3800,7 @@ state 172
     MOVE            reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3747,16 +3822,16 @@ state 172
     $end            reduce using rule 26 (command -> BOX SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 173
+state 176
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 178
+    NUMBER                         shift and go to state 181
 
-state 174
+state 177
 
     (30) command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3773,6 +3848,7 @@ state 174
     MOVE            reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
@@ -3794,7 +3870,7 @@ state 174
     $end            reduce using rule 30 (command -> LINE NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 175
+state 178
 
     (33) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .
     (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER . SYMBOL
@@ -3814,6 +3890,7 @@ state 175
     MOVE            reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
@@ -3833,12 +3910,12 @@ state 175
     WEB             reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
     $end            reduce using rule 33 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER .)
-    XYZ             shift and go to state 38
-    ID              shift and go to state 37
+    XYZ             shift and go to state 39
+    ID              shift and go to state 38
 
-    SYMBOL                         shift and go to state 179
+    SYMBOL                         shift and go to state 182
 
-state 176
+state 179
 
     (32) command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3855,6 +3932,7 @@ state 176
     MOVE            reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
@@ -3876,26 +3954,26 @@ state 176
     $end            reduce using rule 32 (command -> LINE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 177
+state 180
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 180
+    NUMBER                         shift and go to state 183
 
-state 178
+state 181
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 181
+    NUMBER                         shift and go to state 184
 
-state 179
+state 182
 
     (34) command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .
 
@@ -3912,6 +3990,7 @@ state 179
     MOVE            reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     SCALE           reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     ROTATE          reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
+    SHEAR           reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     FRAMES          reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     BASENAME        reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
     VARY            reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
@@ -3933,26 +4012,26 @@ state 179
     $end            reduce using rule 34 (command -> LINE SYMBOL NUMBER NUMBER NUMBER SYMBOL NUMBER NUMBER NUMBER SYMBOL .)
 
 
-state 180
+state 183
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 182
+    NUMBER                         shift and go to state 185
 
-state 181
+state 184
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
-    NUMBER                         shift and go to state 183
+    NUMBER                         shift and go to state 186
 
-state 182
+state 185
 
     (49) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER NUMBER
@@ -3971,6 +4050,7 @@ state 182
     MOVE            reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -3990,47 +4070,47 @@ state 182
     WEB             reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     TEXTURE         reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     $end            reduce using rule 49 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 184
-
-state 183
-
-    (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 185
-
-state 184
-
-    (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
-
-    NUMBER                         shift and go to state 186
-
-state 185
-
-    (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
-    (8) NUMBER -> . DOUBLE
-
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 187
 
 state 186
 
-    (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
     (8) NUMBER -> . DOUBLE
 
-    DOUBLE          shift and go to state 34
+    DOUBLE          shift and go to state 35
 
     NUMBER                         shift and go to state 188
 
 state 187
+
+    (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 189
+
+state 188
+
+    (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 190
+
+state 189
+
+    (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER . NUMBER
+    (8) NUMBER -> . DOUBLE
+
+    DOUBLE          shift and go to state 35
+
+    NUMBER                         shift and go to state 191
+
+state 190
 
     (64) command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
 
@@ -4047,6 +4127,7 @@ state 187
     MOVE            reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
@@ -4068,7 +4149,7 @@ state 187
     $end            reduce using rule 64 (command -> TEXTURE SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
 
 
-state 188
+state 191
 
     (50) command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .
 
@@ -4085,6 +4166,7 @@ state 188
     MOVE            reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     SCALE           reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     ROTATE          reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
+    SHEAR           reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     FRAMES          reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     BASENAME        reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)
     VARY            reduce using rule 50 (command -> CONSTANTS SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER .)

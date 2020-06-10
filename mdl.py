@@ -22,7 +22,7 @@ tokens = (
     "MOVE", 
     "SCALE", 
     "ROTATE",
-    "SHEARING",
+    "SHEAR",
     "BASENAME", 
     "SAVE_KNOBS", 
     "TWEEN", 
@@ -271,8 +271,8 @@ def p_command_rotate(p):
     commands.append(cmd)
 
 def p_command_shear(p):
-    """command : ROTATE XYZ NUMBER NUMBER NUMBER SYMBOL
-                 | ROTATE XYZ NUMBER NUMBER NUMBER"""
+    """command : SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL
+                 | SHEAR XYZ NUMBER NUMBER NUMBER"""
     cmd = {'op' : p[1], 'args' : p[2:6], 'knob' : None}
     if len(p) == 7:
         cmd['knob'] = p[6]
