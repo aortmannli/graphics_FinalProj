@@ -181,6 +181,20 @@ def run(filename):
                 matrix_mult( stack[-1], tmp )
                 stack[-1] = [ x[:] for x in tmp]
                 tmp = []
+            elif c == 'shear':
+		knob = frames[current_frame][command['knob']] if command['knob'] else 1
+                shX = args[1]
+                shY = args[2]
+                shZ = args[3]
+                if args[0] == 'x':
+                    tmp = make_shearX(shX * knob,shY * knob, shZ * knob)
+                elif args[0] == 'y':
+                    tmp = make_shearY(shX * knob,shY * knob, shZ * knob)
+                else:
+                    tmp = make_shearZ(shX * knob,shY * knob, shZ * knob)
+                matrix_mult( stack[-1], tmp )
+                stack[-1] = [ x[:] for x in tmp]
+                tmp = [] 
             elif c == 'push':
                 stack.append([x[:] for x in stack[-1]] )
             elif c == 'pop':
