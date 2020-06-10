@@ -115,8 +115,6 @@ def t_error(t):
 
 lex.lex()
 
-#----------------------------------------------------------
-
 commands = []
 symbols = {}
 
@@ -321,9 +319,14 @@ def p_command_constants(p):
     commands.append(cmd)
 
 def p_command_light(p):
-    "command : LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER"
-    symbols[p[2]] = ['light', {'location' : p[3:6], 'color' : p[6:]}]
-    cmd = {'op':p[1], 'args' : None, 'light' : p[2] }
+    """command : LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
+	     | LIGHT SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER"""
+    symbols[p[2]] = ['light', {'location' : p[3:6], 'color' : p[6:9], 'knob': None}]
+    cmd = {'op':p[1], 'args' : None, 'light' : p[2], 'knob': None }
+    if len(p) == 10:
+        cmd['knob'] = p[9]
+        symbols[p[2]][1]['knob'] = p[9]
+	symbols[p[9]] = ['knob', 0]
     commands.append(cmd)
 
 def p_command_shading(p):
@@ -396,7 +399,7 @@ yacc.yacc()
 
 from copy import deepcopy
 
-def parseFile(filename):
+def parseFile(filename):``
     """
     This function returns a tuple containing a list of opcodes
     and a list of symbols.
