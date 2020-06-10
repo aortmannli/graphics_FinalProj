@@ -156,7 +156,7 @@ def run(filename):
                         args[0], args[1], args[2],
                         args[3], args[4], args[5])
                 matrix_mult( stack[-1], tmp )
-                draw_polygons(tmp, screen, zbuffer, view, ambient, symbols, reflect, shading)
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []
                 reflect = '.white'
             elif c == 'sphere':
@@ -165,7 +165,7 @@ def run(filename):
                 add_sphere(tmp,
                            args[0], args[1], args[2], args[3], step_3d)
                 matrix_mult( stack[-1], tmp )
-                draw_polygons(tmp, screen, zbuffer, view, ambient, symbols, reflect, shading)
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []
                 reflect = '.white'
             elif c == 'torus':
@@ -174,7 +174,7 @@ def run(filename):
                 add_torus(tmp,
                           args[0], args[1], args[2], args[3], args[4], step_3d)
                 matrix_mult( stack[-1], tmp )
-                draw_polygons(tmp, screen, zbuffer, view, ambient, symbols, reflect, shading)
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []
                 reflect = '.white'
             elif c == 'line':
@@ -204,20 +204,6 @@ def run(filename):
                     tmp = make_rotY(theta * knob)
                 else:
                     tmp = make_rotZ(theta * knob)
-                matrix_mult( stack[-1], tmp )
-                stack[-1] = [ x[:] for x in tmp]
-                tmp = []
-            elif c == 'shear':
-                knob = frames[current_frame][command['knob']] if command['knob'] else 1
-                shX = args[1]
-                shY = args[2]
-                shZ = args[3]
-                if args[0] == 'x':
-                    tmp = make_shearX(shX * knob,shY * knob, shZ * knob)
-                elif args[0] == 'y':
-                    tmp = make_shearY(shX * knob,shY * knob, shZ * knob)
-                else:
-                    tmp = make_shearZ(shX * knob,shY * knob, shZ * knob)
                 matrix_mult( stack[-1], tmp )
                 stack[-1] = [ x[:] for x in tmp]
                 tmp = []
