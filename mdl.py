@@ -21,7 +21,8 @@ tokens = (
     "SET", 
     "MOVE", 
     "SCALE", 
-    "ROTATE", 
+    "ROTATE",
+    "SHEAR",
     "BASENAME", 
     "SAVE_KNOBS", 
     "TWEEN", 
@@ -61,6 +62,7 @@ reserved = {
     "move" : "MOVE",
     "scale" : "SCALE",
     "rotate" : "ROTATE",
+    "shear" : "SHEAR",
     "basename" : "BASENAME",
     "save_knobs" : "SAVE_KNOBS",
     "tween" : "TWEEN",
@@ -267,7 +269,16 @@ def p_command_rotate(p):
         cmd['knob'] = p[4]
         symbols[p[4]] = ['knob', 0]
     commands.append(cmd)
-
+    
+def p_command_shear(p):
+    """command : SHEAR XYZ NUMBER NUMBER NUMBER SYMBOL
+                 | SHEAR XYZ NUMBER NUMBER NUMBER"""
+    cmd = {'op' : p[1], 'args' : p[2:5], 'knob' : None}
+    if len(p) == 6:
+        cmd['knob'] = p[5]
+        symbols[p[5]] = ['knob', 0]
+    commands.append(cmd)
+    
 def p_command_frames(p):
     """command : FRAMES NUMBER"""
     cmd = {'op' : p[1], 'args' : [p[2]]}

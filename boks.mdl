@@ -1,0 +1,7 @@
+basename boks
+push
+move 250 250 0
+box 0 80 80 80 0 0
+shear x 10 10 
+display
+save box.png
