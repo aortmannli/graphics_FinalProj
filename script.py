@@ -87,6 +87,7 @@ def second_pass( commands, num_frames, symbols ):
                     frame += 1
     return frames
 
+
 def run(filename):
     """
     This function runs an mdl script
@@ -116,8 +117,6 @@ def run(filename):
     (name, num_frames) = first_pass(commands)
     frames = second_pass(commands, num_frames, symbols)
 
-    shading = 'FLAT' #until otherwise mentioned
-
     current_frame = 0
     while current_frame < num_frames:
         print 'Generating frame ' + str(current_frame)
@@ -127,10 +126,12 @@ def run(filename):
         screen = new_screen()
     	zbuffer = new_zbuffer()
         tmp = []
-        step_3d = 50
+        step_3d = 100
         consts = ''
         coords = []
         coords1 = []
+
+        light = 'lol'
 
         for symbol in symbols:
             if current_frame >= 1 and symbols[symbol][0] == 'light' and symbols[symbol][1]['knob']:
@@ -147,17 +148,6 @@ def run(filename):
         for command in commands:
             c = command['op']
             args = command['args']
-
-            if c == 'mesh':
-                if command['constants']:
-                    reflect = command['constants']
-                add_mesh(tmp, args[0])
-                matrix_mult( stack[-1], tmp)
-                draw_polygons(tmp, screen, zbuffer, view, ambient, symbols, reflect, shading)
-                tmp = []
-                reflect = '.white'
-            if c == 'shading':
-                shading = command['shade_type'].upper()
 
             if c == 'box':
                 if command['constants']:
@@ -218,7 +208,7 @@ def run(filename):
                 stack[-1] = [ x[:] for x in tmp]
                 tmp = []
             elif c == 'shear':
-		knob = frames[current_frame][command['knob']] if command['knob'] else 1
+                knob = frames[current_frame][command['knob']] if command['knob'] else 1
                 shX = args[1]
                 shY = args[2]
                 shZ = args[3]
@@ -230,7 +220,7 @@ def run(filename):
                     tmp = make_shearZ(shX * knob,shY * knob, shZ * knob)
                 matrix_mult( stack[-1], tmp )
                 stack[-1] = [ x[:] for x in tmp]
-                tmp = [] 
+                tmp = []
             elif c == 'push':
                 stack.append([x[:] for x in stack[-1]] )
             elif c == 'pop':
