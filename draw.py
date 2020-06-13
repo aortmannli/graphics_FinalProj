@@ -2,6 +2,32 @@ from display import *
 from matrix import *
 from gmath import *
 
+def add_mesh(polygons, mesh_file):
+    mesh_file = mesh_file.strip(':')
+    print(mesh_file)
+    mesh_file += '.obj'
+    mesh = open(mesh_file, "r")
+    mesh = mesh.readlines()
+    vertices, current_vertex = [0], 1
+    faces = []
+    for line in mesh:
+        line = line.strip()
+        line = line.split(' ')
+        tmp_line = []
+        for item in line:
+            if item != '':
+                tmp_line.append(item)
+        line = tmp_line
+        if len(line) > 0 and line[0] == 'v':
+            vertices.append([float(line[1]), float(line[2]), float(line[3]), 1.0])
+        elif len(line) > 0 and line[0] == 'f':
+            faces.append([int(line[1]), int(line[2]), int(line[3])])
+        current_vertex += 1
+    for face in faces:
+        add_polygon(polygons, vertices[face[0]][0], vertices[face[0]][1], vertices[face[0]][2], 
+                              vertices[face[1]][0], vertices[face[1]][1], vertices[face[1]][2],
+                              vertices[face[2]][0], vertices[face[2]][1], vertices[face[2]][2])
+    
 def draw_scanline(x0, z0, x1, z1, y, screen, zbuffer, color):
     if x0 > x1:
         tx = x0

@@ -183,6 +183,16 @@ def run(filename):
                 matrix_mult( stack[-1], tmp )
                 draw_lines(tmp, screen, zbuffer, color)
                 tmp = []
+            elif c == 'mesh':
+                if command['constants']:
+                    reflect = command['constants']
+                print(len(args))
+                print(args[0])
+                add_mesh(tmp, args[0]) 
+                matrix_mult( stack[-1], tmp)
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+                tmp = []
+                reflect = '.white'
             elif c == 'move':
                 knob = frames[current_frame][command['knob']] if command['knob'] else 1
                 tmp = make_translate(args[0] * knob, args[1] * knob, args[2] * knob)
