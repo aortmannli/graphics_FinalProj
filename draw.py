@@ -4,7 +4,6 @@ from gmath import *
 
 def add_mesh(polygons, mesh_file):
     mesh_file = mesh_file.strip(':')
-    print(mesh_file)
     mesh_file += '.obj'
     mesh = open(mesh_file, "r")
     mesh = mesh.readlines()
@@ -24,10 +23,10 @@ def add_mesh(polygons, mesh_file):
             faces.append([int(line[1]), int(line[2]), int(line[3])])
         current_vertex += 1
     for face in faces:
-        add_polygon(polygons, vertices[face[0]][0], vertices[face[0]][1], vertices[face[0]][2], 
+        add_polygon(polygons, vertices[face[0]][0], vertices[face[0]][1], vertices[face[0]][2],
                               vertices[face[1]][0], vertices[face[1]][1], vertices[face[1]][2],
                               vertices[face[2]][0], vertices[face[2]][1], vertices[face[2]][2])
-    
+                                  
 def draw_scanline(x0, z0, x1, z1, y, screen, zbuffer, color):
     if x0 > x1:
         tx = x0
@@ -425,4 +424,3 @@ def draw_line( x0, y0, z0, x1, y1, z1, screen, zbuffer, color ):
         z+= dz
         loop_start+= 1
     plot( screen, zbuffer, color, x, y, z )
-    

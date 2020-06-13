@@ -186,11 +186,12 @@ def run(filename):
             elif c == 'mesh':
                 if command['constants']:
                     reflect = command['constants']
-                print(len(args))
-                print(args[0])
-                add_mesh(tmp, args[0]) 
+                print("len args:"+len(args))
+                print("the arg"+ args[0])
+                add_mesh(tmp, args[0])
                 matrix_mult( stack[-1], tmp)
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+                #draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []
                 reflect = '.white'
             elif c == 'move':
