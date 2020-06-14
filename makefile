@@ -1,8 +1,6 @@
-test: face.mdl lex.py main.py matrix.py mdl.py display.py draw.py gmath.py yacc.py
-	python main.py lightstest.mdl	
-
-clean:
-	rm *pyc *out parsetab.py
-
+test: testmesh.mdl lex.py main.py matrix.py mdl.py display.py draw.py gmath.py yacc.py
+	python main.py testmesh.mdl
+	rm *pyc *out parsetab.py 
+        
 clear:
 	rm *pyc *out parsetab.py *ppm

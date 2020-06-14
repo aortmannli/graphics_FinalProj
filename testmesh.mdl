@@ -1,0 +1,11 @@
+frames 10
+basename fuck
+shading flat
+
+constants teapot_dude 0.2 0.3 0.0 0.5 0.6 0.0 0.5 0.6 0.6
+
+push
+move 50 150 0
+rotate x -70
+scale 3 3 3 
+mesh teapot_dude :teapot

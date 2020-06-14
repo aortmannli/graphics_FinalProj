@@ -1,10 +1,10 @@
 import math
 from display import *
-
+from draw import *
 
   # IMPORANT NOTE
 
-  # Ambient light is represeneted by a color value
+  # Ambient light is represented by a color value
 
   # Point light sources are 2D arrays of doubles.
   #      - The fist index (LOCATION) represents the vector to the light.
@@ -18,15 +18,14 @@ DIFFUSE = 1
 SPECULAR = 2
 LOCATION = 0
 COLOR = 1
-SPECULAR_EXP = 4
+SPECULAR_EXP = 8
 
-#lighting functions
-def get_lighting(normal, view, ambient, light, symbols, reflect ):
+def get_lighting(normal, view, ambient, symbols, reflect ):
     #light_sources is a list of all the lighting sources in symbols
     light_sources = []
     for symbol in symbols:
         if symbols[symbol][0] == 'light':
-            light_sources.append(symbols[symbol][1])
+            light_sources.append(symbols[symbol][1])   
 
     n = normal[:]
     normalize(n)
@@ -61,9 +60,9 @@ def calculate_diffuse(light_sources, reflect, normal):
         dot += dot_product( light['location'], normal)
 
         dot += dot if dot > 0 else 0
-        d[RED] += light['color'][RED] * reflect['red'][DIFFUSE] * dot
-        d[GREEN] += light['color'][GREEN] * reflect['green'][DIFFUSE] * dot
-        d[BLUE] += light['color'][BLUE] * reflect['blue'][DIFFUSE] * dot
+        d[RED] += (light['color'][RED] * reflect['red'][DIFFUSE] * dot) / len(light_sources)
+        d[GREEN] += (light['color'][GREEN] * reflect['green'][DIFFUSE] * dot) / len(light_sources)
+        d[BLUE] += (light['color'][BLUE] * reflect['blue'][DIFFUSE] * dot) / len(light_sources)
     return d
 
 def calculate_specular(light_sources, reflect, view, normal):
@@ -79,18 +78,19 @@ def calculate_specular(light_sources, reflect, view, normal):
         result = result if result > 0 else 0
         result = pow( result, SPECULAR_EXP )
 
-        s[RED] += light['color'][RED] * reflect['red'][SPECULAR] * result
-        s[GREEN] += light['color'][GREEN] * reflect['green'][SPECULAR] * result
-        s[BLUE] += light['color'][BLUE] * reflect['blue'][SPECULAR] * result
+        s[RED] += (light['color'][RED] * reflect['red'][SPECULAR] * result) / len(light_sources)
+        s[GREEN] += (light['color'][GREEN] * reflect['green'][SPECULAR] * result) / len(light_sources)
+        s[BLUE] += (light['color'][BLUE] * reflect['blue'][SPECULAR] * result) / len(light_sources)
     return s
 
+#color limited at 245 rather than 255 for aesthetic reasons
 def limit_color(color):
-    color[RED] = 255 if color[RED] > 255 else color[RED]
-    color[GREEN] = 255 if color[GREEN] > 255 else color[GREEN]
-    color[BLUE] = 255 if color[BLUE] > 255 else color[BLUE]
-    color[RED] = 0 if color[RED] < 0 else color[RED]
-    color[GREEN] = 0 if color[GREEN] < 0 else color[GREEN]
-    color[BLUE] = 0 if color[BLUE] < 0 else color[BLUE]
+    color[RED] = 245 if color[RED] > 245 else color[RED]
+    color[GREEN] = 245 if color[GREEN] > 245 else color[GREEN]
+    color[BLUE] = 245 if color[BLUE] > 245 else color[BLUE]
+    color[RED] = 15 if color[RED] < 15 else color[RED]
+    color[GREEN] = 15 if color[GREEN] < 15 else color[GREEN]
+    color[BLUE] = 15 if color[BLUE] < 15 else color[BLUE]
 
 #vector functions
 #normalize vetor, should modify the parameter
@@ -99,7 +99,10 @@ def normalize(vector):
                            vector[1] * vector[1] +
                            vector[2] * vector[2])
     for i in range(3):
-        vector[i] = vector[i] / magnitude
+        if magnitude != 0:
+            vector[i] = vector[i] / magnitude
+        else:
+            vector[i] = 0
 
 #Return the dot porduct of a . b
 def dot_product(a, b):

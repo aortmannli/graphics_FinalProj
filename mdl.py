@@ -14,41 +14,41 @@ tokens = (
     "AMBIENT",
     "TORUS",
     "SPHERE",
-    "BOX",
-    "LINE",
-    "MESH",
-    "TEXTURE",
-    "SET",
-    "MOVE",
-    "SCALE",
-    "ROTATE",
-    "BASENAME",
-    "SAVE_KNOBS",
-    "TWEEN",
-    "FRAMES",
-    "VARY",
-    "PUSH",
-    "POP",
-    "SAVE",
-    "GENERATE_RAYFILES",
-    "SHADING",
-    "SHADING_TYPE",
-    "SET_KNOBS",
-    "FOCAL",
-    "DISPLAY",
-    "SCREEN",
-    "WEB",
+    "BOX", 
+    "LINE", 
+    "MESH", 
+    "TEXTURE", 
+    "SET", 
+    "MOVE", 
+    "SCALE", 
+    "ROTATE", 
+    "BASENAME", 
+    "SAVE_KNOBS", 
+    "TWEEN", 
+    "FRAMES", 
+    "VARY", 
+    "PUSH", 
+    "POP", 
+    "SAVE", 
+    "GENERATE_RAYFILES", 
+    "SHADING", 
+    "SHADING_TYPE", 
+    "SET_KNOBS", 
+    "FOCAL", 
+    "DISPLAY", 
+    "SCREEN", 
+    "WEB", 
     "CO"
 )
 
 reserved = {
-    "x" : "XYZ",
-    "y" : "XYZ",
-    "z" : "XYZ",
-    "screen" : "SCREEN",
+    "x" : "XYZ", 
+    "y" : "XYZ", 
+    "z" : "XYZ", 
+    "screen" : "SCREEN", 
     "light" : "LIGHT",
     "constants" : "CONSTANTS",
-    "save_coord_system" : "SAVE_COORDS",
+    "save_coord_system" : "SAVE_COORDS", 
     "camera" : "CAMERA",
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
@@ -346,11 +346,13 @@ def p_command_mesh(p):
     if isinstance(p[2], str):
         cmd['constants'] = p[2]
         arg_start+= 1
-    cmd['args'].append(p[arg_start])
+        cmd['args'].append(p[arg_start + 1])
+    else:
+        cmd['args'].append(p[arg_start])
     if len(p) == 4 and isinstance(p[3], str):
-        cmd['cs'] = p[3]
+        cmd['cs'] = p[2]
     if len(p) == 5 and isinstance(p[4], str):
-        cmd['cs'] = p[4]
+        cmd['cs'] = p[3]
     commands.append(cmd)
 
 def p_save_knobs(p):
