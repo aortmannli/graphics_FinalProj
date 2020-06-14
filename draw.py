@@ -68,49 +68,12 @@ def scanline_convert(polygons, i, screen, zbuffer, colors):
         z1+= dz1
         y+= 1
 
-#add a gouraud_draw_scanlines
-
-def gouraud_scanlines(polygons, point, zbuffer, view, ambient, symbols, reflect, normal_hash_table, screen):
-    if point + 2 >= len(polygons) - 1:
-        return
-    #check if point NOT in normal_hash_table, if it isn't, run hash_normals for the point
-    for i in range(3):
-	if not tuple([int(100 * v)/100.0 for v in polygons[point]]) in normal_hash_table:
-   	    hash_normals(polygons, point, normal_hash_table, view, ambient, symbols, reflect, 'GOURAUD')
-	point += 1
-    point -= 3
-    colors = [normal_hash_table[ tuple([int(100 * v)/100.0 for v in polygons[point]])], normal_hash_table[ tuple([int(100 * v)/100.0 for v in polygons[point + 1]])], normal_hash_table[ tuple([int(100 * v)/100.0 for v in polygons[point + 2]])]]
-    scanline_convert(polygons, point, screen, zbuffer, colors, 'GOURAUD')
-    #colors[0] is point0 color, colors[1] point1, etc....
-    #here, we get our 3 gradient points - bottom, mid, and top
-    #modify scanlines function
-
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x0, y0, z0)
     add_point(polygons, x1, y1, z1)
     add_point(polygons, x2, y2, z2)
 
-#go through each polygon in polygons
-#if point (x, y, z) is found in the polygon, calculate the normal and
-#add the normal to Nv>
-#make sure to cut off floating points at 3 digits
-#once all polygons have been traversed, save this into a hash table
-#normal_hash_table has been defined as an empty dict in script.py
-def hash_normals( polygons, pointer, normal_hash_table, view, ambient, symbols, reflect):
-    counter = 0
-    normal = [0,0,0]
-    point = [int(100 * v)/100.0 for v in polygons[pointer]]
-    while counter < len(polygons):
-	if [int(100 * polygons[counter][v])/100.0 for v in range(4)] == point or\
-	   [int(100 * polygons[counter + 1][v])/100.0 for v in range(4)] == point or\
-	   [int(100 * polygons[counter + 2][v])/100.0 for v in range(4)] == point:
-	     normal = [normal[v] + calculate_normal(polygons,counter)[v] for v in range(3)]
-	counter += 3
-    normalize(normal)
-    normal_hash_table[tuple(point)] = get_lighting(normal, view, ambient, symbols, reflect)
-
 def draw_polygons( polygons, screen, zbuffer, view, ambient, symbols, reflect):
-    normal_hash_table = dict()
     if len(polygons) < 2:
         print 'Need at least 3 points to draw'
         return
