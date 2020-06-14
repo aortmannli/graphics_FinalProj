@@ -83,6 +83,15 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
 
     point = 0
     while point < len(polygons) - 2:
+            normal = calculate_normal(polygons, point)[:]
+            if normal[2] > 0:
+                color = get_lighting(normal, view, ambient, symbols, reflect )
+                scanline_convert(polygons, point, screen, zbuffer, color)
+            point+= 3
+    return
+    """
+
+    while point < len(polygons) - 2:
 
         normal = calculate_normal(polygons, point)[:]
 
@@ -91,7 +100,7 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
 
             color = get_lighting(normal, view, ambient, light, symbols, reflect )
             scanline_convert(polygons, point, screen, zbuffer, color)
-
+"""
             # draw_line( int(polygons[point][0]),
             #            int(polygons[point][1]),
             #            polygons[point][2],
@@ -113,7 +122,32 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
             #            int(polygons[point+2][1]),
             #            polygons[point+2][2],
             #            screen, zbuffer, color)
-        point+= 3
+        #point+= 3
+
+def add_mesh(polygons, mesh_file):
+    mesh_file = mesh_file.strip(':')
+    mesh_file += '.obj'
+    mesh = open(mesh_file, "r")
+    mesh = mesh.readlines()
+    vertices, current_vertex = [0], 1
+    faces = []
+    for line in mesh:
+        line = line.strip()
+        line = line.split(' ')
+        tmp_line = []
+        for item in line:
+            if item != '':
+                tmp_line.append(item)
+        line = tmp_line
+        if len(line) > 0 and line[0] == 'v':
+            vertices.append([float(line[1]), float(line[2]), float(line[3]), 1.0])
+        elif len(line) > 0 and line[0] == 'f':
+            faces.append([int(line[1]), int(line[2]), int(line[3])])
+        current_vertex += 1
+    for face in faces:
+        add_polygon(polygons, vertices[face[0]][0], vertices[face[0]][1], vertices[face[0]][2],
+                              vertices[face[1]][0], vertices[face[1]][1], vertices[face[1]][2],
+                              vertices[face[2]][0], vertices[face[2]][1], vertices[face[2]][2])
 
 
 def add_box( polygons, x, y, z, width, height, depth ):
@@ -399,4 +433,3 @@ def draw_line( x0, y0, z0, x1, y1, z1, screen, zbuffer, color ):
         z+= dz
         loop_start+= 1
     plot( screen, zbuffer, color, x, y, z )
-    
