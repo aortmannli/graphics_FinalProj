@@ -1,0 +1,35 @@
+frames 70
+basename final
+
+constants flowery  0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0
+constants brownish 0.35 0.75164 0.628281 0.3995 0.60648 0.555802 0.2745 0.32648 0.336065 35 35 35
+constants background 0.3 0.20 0.0 0.5 0.6 0.0 0.5 0.6 0.6
+
+light light0 1 1 1 150 140 140 a
+light light1 0 1 0 150 0 150 b
+
+vary a 0 69 0 1 0 150 0 150
+vary b 0 69 1 1 1 150 150 150
+
+vary spin 0 69 0 1
+
+push
+box background 0 500 -500 500 500 2
+sphere brownish 250 150 0 100
+torus brownish 250 230 0 20 60
+torus brownish 250 50 0 10 30
+line 247 230 0 247 330 0
+line 248 230 0 248 330 0
+line 249 230 0 247 330 0
+line 250 230 0 247 330 0
+line 251 230 0 247 330 0
+line 252 230 0 247 330 0
+line 253 230 0 247 330 0
+pop
+push
+move 250 330 0
+rotate x 30
+rotate y 360 spin
+mesh flowery: magnolia
+pop
+

@@ -113,7 +113,7 @@ def run(filename):
                50,
                50]
 
-    color = [0, 0, 0]
+    color = [140, 100, 50]
     symbols['.white'] = ['constants',
                          {'red': [0.2, 0.5, 0.5],
                           'green': [0.2, 0.5, 0.5],

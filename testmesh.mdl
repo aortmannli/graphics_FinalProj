@@ -1,11 +1,17 @@
-frames 10
-basename fuck
-shading flat
+frames 50
+basename flower
 
-constants teapot_dude 0.2 0.3 0.0 0.5 0.6 0.0 0.5 0.6 0.6
+light light0 1 1 1 150 150 150 sun
+light light1 0 1 0 150 0 150 sun2
+
+vary sun 0 49 0 1 0 150 0 150
+vary sun2 0 49 1 1 1 150 150 150
+
+constants flowery 0.2 0.3 0.0 0.5 0.6 0.0 0.5 0.6 0.6
 
 push
-move 50 150 0
-rotate x -70
-scale 3 3 3 
-mesh teapot_dude :teapot
+move 250 250 0
+scale 3 3 3
+
+mesh flowery :magnolia
+
